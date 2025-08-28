@@ -3,7 +3,7 @@
     position: fixed;
     top: 20px;
     left: 20px;
-    max-width: 150px;
+    max-width: 300px;
     z-index: 100;
 }
 
@@ -23,31 +23,47 @@
 }
 
 .input-area {
+  
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: rgba(120, 239, 128, 0.8);
-    padding: 40px 60px;
-    border-radius: 20px;
+      background-color: rgba(134, 241, 134, 0.9);
+    /* ↓↓ この部分が変更されました ↓↓ */
+    width: 600px;
+    height: 300px;
+    padding: 40px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* ↑↑ ここまでが変更部分です ↑↑ */
+    border-radius: 80px;
     text-align: center;
-    width: 80%;
-    max-width: 500px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    border: 2px solid white;
+    
 }
 
 .input-area p {
+    
     margin: 0 0 20px 0;
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     font-weight: bold;
-    color: #333;
+    color: #222;
 }
 
 .input-area input {
-    width: 100%;
+    /* ↓↓ この部分が変更されました ↓↓ */
+    width: 80%;
+    max-width: 400px;
+    /* ↑↑ ここまでが変更部分です ↑↑ */
     padding: 15px;
     border-radius: 15px;
     border: none;
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 1.7rem;
+      opacity: 0.8;
+       font-weight: 500;
 }
