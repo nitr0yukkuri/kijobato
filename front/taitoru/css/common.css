@@ -1,0 +1,23 @@
+/* ===== 基本設定 ===== */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Hiragino Kaku Gothic ProN', 'メイリオ', Meiryo, sans-serif;
+    overflow: hidden;
+    color: white;
+}
+
+/* ===== 背景 ===== */
+.background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("../png/treetree.jpg"); /* 階層が変わったのでパスを修正 */
+    background-size: cover;
+    background-position: center;
+    transform: scale(1.1);
+    z-index: -1;
+}

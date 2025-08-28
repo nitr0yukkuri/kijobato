@@ -1,0 +1,53 @@
+/* 左上に表示されるロゴのスタイル */
+.game-logo {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    max-width: 150px;
+    z-index: 100;
+}
+
+/* ===== ゲーム画面UI ===== */
+#game-ui {
+    opacity: 1; /* 最初から表示 */
+}
+
+.timer {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.input-area {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(120, 239, 128, 0.8);
+    padding: 40px 60px;
+    border-radius: 20px;
+    text-align: center;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.input-area p {
+    margin: 0 0 20px 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.input-area input {
+    width: 100%;
+    padding: 15px;
+    border-radius: 15px;
+    border: none;
+    text-align: center;
+    font-size: 1.5rem;
+}
