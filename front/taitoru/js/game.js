@@ -7,7 +7,10 @@ window.onload = () => {
     const countdown = setInterval(() => {
         if (timeLeft <= 0) {
             clearInterval(countdown); // カウントダウンを停止
-            timerElement.textContent = "終了！";
+            
+            // ★変更点：敗北画面 (finish-lose.html) へ移動する
+            window.location.href = 'finish-lose.html';
+
         } else {
             timerElement.textContent = `残り${timeLeft}秒`;
             timeLeft--;

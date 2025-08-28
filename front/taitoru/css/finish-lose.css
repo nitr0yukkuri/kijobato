@@ -1,0 +1,53 @@
+/* 左上に表示されるロゴのスタイル */
+.game-logo {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    max-width: 230px;
+    z-index: 100;
+}
+
+/* 結果表示用のコンテナ */
+.result-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+#result-image {
+    max-width: 60%;
+    height: auto;
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+#retry-button {
+    padding: 15px 40px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    background-color: #3498db;
+    border: 2px solid white;
+    border-radius: 50px;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out 0.3s, transform 0.8s ease-out 0.3s, background-color 0.2s;
+}
+
+#retry-button:hover {
+    background-color: #4db8ff;
+    transform: translateY(0) scale(1.05); /* 表示後の位置で拡大 */
+}
+
+/* 表示時に付けるクラス */
+.result-container.show #result-image,
+.result-container.show #retry-button {
+    opacity: 1;
+    transform: translateY(0);
+}
