@@ -9,7 +9,7 @@
 
 /* ===== ゲーム画面UI ===== */
 #game-ui {
-    opacity: 1; /* 最初から表示 */
+    opacity: 1;
 }
 
 .timer {
@@ -23,47 +23,66 @@
 }
 
 .input-area {
-  
+    /* ★変更点: ここから下の4行を追加して中央配置に戻します */
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-      background-color: rgba(134, 241, 134, 0.9);
-    /* ↓↓ この部分が変更されました ↓↓ */
-    width: 600px;
-    height: 300px;
-    padding: 40px;
-    box-sizing: border-box;
+    
+    /* 内部のレイアウト (flex) はそのままです */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* ↑↑ ここまでが変更部分です ↑↑ */
+    
+    background-color: rgba(134, 241, 134, 0.9);
+    width: 600px;
+    height: 300px;
+    padding: 40px;
+    box-sizing: border-box;
     border-radius: 80px;
     text-align: center;
     box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     border: 2.5px solid white;
-    
 }
 
 .input-area p {
-    
-    margin: 0 0 20px 0;
+    margin-bottom: 20px;
     font-size: 1.7rem;
     font-weight: bold;
     color: #222;
 }
 
 .input-area input {
-    /* ↓↓ この部分が変更されました ↓↓ */
     width: 80%;
     max-width: 400px;
-    /* ↑↑ ここまでが変更部分です ↑↑ */
     padding: 15px;
     border-radius: 15px;
     border: none;
     text-align: center;
     font-size: 1.7rem;
-      opacity: 0.8;
-       font-weight: 500;
+    opacity: 0.8;
+    font-weight: 500;
+}
+
+#feedback-message {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    font-size: 1.5em;
+    color: red;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    pointer-events: none;
+    margin-bottom: 0;
+}
+
+#feedback-message.show {
+    opacity: 1;
 }
