@@ -14,10 +14,10 @@
 
 .timer {
     position: fixed;
-    top: 20px;
+    top: 250px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: bold;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
@@ -27,21 +27,17 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    
-    /* ★変更点: 背景色を左のresult-displayに合わせる */
-    background-color: rgba(0, 0, 0, 0.75); /* 左側の結果表示エリアと同じ色 */
-    border: 2px solid white; /* 左側の結果表示エリアと同じ枠線 */
-
+    background-color: rgba(0, 0, 0, 0.75);
+    border: 2px solid white;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
     width: 600px;
     height: 300px;
     padding: 40px;
     box-sizing: border-box;
-    border-radius: 15px; /* result-displayに合わせて角を丸く */
+    border-radius: 15px;
     text-align: center;
     box-shadow: 0 4px 15px rgba(0,0,0,0.5);
 }
@@ -50,7 +46,6 @@
     margin-bottom: 20px;
     font-size: 1.7rem;
     font-weight: bold;
-    /* ★変更点: 文字色を白に */
     color: white; 
 }
 
@@ -58,21 +53,23 @@
     width: 80%;
     max-width: 400px;
     padding: 15px;
-    border-radius: 8px; /* 少し角を丸く */
-    /* ★変更点: 背景を透明、文字色を黄色に、枠線を追加 */
-    background-color: transparent; /* 背景を透明にする */
-    border: 1px solid green; /* 左側のspanの文字色に合わせた枠線 */
-    color: #55ff44 !important; /* 文字色を左側のspanに合わせる */
-    
+    border-radius: 8px;
+    background-color: transparent;
+    border: 1px solid green;
+    color: #55ff44 !important;
     text-align: center;
     font-size: 1.7rem;
-    opacity: 1; /* 完全に表示 */
+    opacity: 1;
     font-weight: 500;
 }
 
-/* inputのプレースホルダーの色も合わせる */
 .input-area input::placeholder {
-    color: rgba(65, 241, 94, 0.7); /* 少し薄めの黄色 */
+    color: rgba(65, 241, 94, 0.7);
+}
+
+.input-area input:focus {
+    outline: none;
+    border: 1px solid green;
 }
 
 #feedback-message {
@@ -100,17 +97,16 @@
 /* 左側に表示する結果エリア */
 #result-display {
     position: fixed;
-    left: 200px;
+    left: 50px;
     top: 50%;
     transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.75);
+    background-color: rgba(53, 65, 255, 0.75);
     color: white;
-    padding: 20px;
+    padding: 25px;
+    width: 500px;
     border-radius: 15px;
     border: 2px solid white;
     box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    width: 300px;
-    font-size: 1.2rem;
     opacity: 1;
     transition: opacity 0.4s ease-in-out;
 }
@@ -120,28 +116,22 @@
     font-weight: bold;
 }
 
-/* 最後のp要素の下マージンをなくす */
+/* ★変更点: 一行目の文字サイズ */
+#result-display p:first-child {
+    font-size: 1.8rem;
+}
+
+/* ★変更点: 二行目の文字サイズ */
 #result-display p:last-child {
+    font-size: 1.2rem;
     margin-bottom: 0;
 }
 
 #result-display span {
-    color: #ffdd57; /* 黄色っぽい色 */
+    color: #ffdd57;
 }
 
-/* このクラスが付いているときは非表示 */
 .hidden {
     opacity: 0;
     pointer-events: none;
-}
-/* inputのプレースホルダーの色も合わせる */
-.input-area input::placeholder {
-    color: rgba(65, 241, 94, 0.7);
-}
-
-/* ★変更点: ここから下のブロックを全て追加 */
-/* 入力欄がクリックされている（フォーカス中）のスタイル */
-.input-area input:focus {
-    outline: none; /* ブラウザ標準の白い枠線を消す */
-    border: 1px solid green; /* 枠線を緑色に保つ */
 }
