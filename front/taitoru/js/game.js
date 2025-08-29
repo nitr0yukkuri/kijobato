@@ -8,6 +8,12 @@ window.onload = () => {
         if (timeLeft <= 0) {
             clearInterval(countdown); // カウントダウンを停止
             timerElement.textContent = "終了！";
+            
+            // ★この行を追加！ 1秒後に結果画面へ移動します
+            setTimeout(() => {
+                window.location.href = 'finish-lose.html';
+            }, 1000); // 1秒待ってから移動
+
         } else {
             timerElement.textContent = `残り${timeLeft}秒`;
             timeLeft--;
