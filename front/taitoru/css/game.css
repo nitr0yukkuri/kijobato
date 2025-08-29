@@ -23,56 +23,66 @@
 }
 
 .input-area {
-    /* ★変更点: ここから下の4行を追加して中央配置に戻します */
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     
-    /* 内部のレイアウト (flex) はそのままです */
+    /* ★変更点: 背景色を左のresult-displayに合わせる */
+    background-color: rgba(0, 0, 0, 0.75); /* 左側の結果表示エリアと同じ色 */
+    border: 2px solid white; /* 左側の結果表示エリアと同じ枠線 */
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     
-    background-color: rgba(134, 241, 134, 0.9);
     width: 600px;
     height: 300px;
     padding: 40px;
     box-sizing: border-box;
-    border-radius: 80px;
+    border-radius: 15px; /* result-displayに合わせて角を丸く */
     text-align: center;
     box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    border: 2.5px solid white;
 }
 
 .input-area p {
     margin-bottom: 20px;
     font-size: 1.7rem;
     font-weight: bold;
-    color: #222;
+    /* ★変更点: 文字色を白に */
+    color: white; 
 }
 
 .input-area input {
     width: 80%;
     max-width: 400px;
     padding: 15px;
-    border-radius: 15px;
-    border: none;
+    border-radius: 8px; /* 少し角を丸く */
+    /* ★変更点: 背景を透明、文字色を黄色に、枠線を追加 */
+    background-color: transparent; /* 背景を透明にする */
+    border: 1px solid green; /* 左側のspanの文字色に合わせた枠線 */
+    color: #55ff44 !important; /* 文字色を左側のspanに合わせる */
+    
     text-align: center;
     font-size: 1.7rem;
-    opacity: 0.8;
+    opacity: 1; /* 完全に表示 */
     font-weight: 500;
 }
 
+/* inputのプレースホルダーの色も合わせる */
+.input-area input::placeholder {
+    color: rgba(65, 241, 94, 0.7); /* 少し薄めの黄色 */
+}
+
 #feedback-message {
+    font-size: 1.6em;
     position: absolute;
     top: 40px;
     left: 50%;
     transform: translateX(-50%);
     width: 90%;
-    font-size: 1.5em;
-    color: red;
+    color: yellow;
     padding: 10px 15px;
     border-radius: 8px;
     text-align: center;
@@ -85,4 +95,53 @@
 
 #feedback-message.show {
     opacity: 1;
+}
+
+/* 左側に表示する結果エリア */
+#result-display {
+    position: fixed;
+    left: 200px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.75);
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    border: 2px solid white;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    width: 300px;
+    font-size: 1.2rem;
+    opacity: 1;
+    transition: opacity 0.4s ease-in-out;
+}
+
+#result-display p {
+    margin: 0 0 10px 0;
+    font-weight: bold;
+}
+
+/* 最後のp要素の下マージンをなくす */
+#result-display p:last-child {
+    margin-bottom: 0;
+}
+
+#result-display span {
+    color: #ffdd57; /* 黄色っぽい色 */
+}
+
+/* このクラスが付いているときは非表示 */
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+/* inputのプレースホルダーの色も合わせる */
+.input-area input::placeholder {
+    color: rgba(65, 241, 94, 0.7);
+}
+
+/* ★変更点: ここから下のブロックを全て追加 */
+/* 入力欄がクリックされている（フォーカス中）のスタイル */
+.input-area input:focus {
+    outline: none; /* ブラウザ標準の白い枠線を消す */
+    border: 1px solid green; /* 枠線を緑色に保つ */
 }

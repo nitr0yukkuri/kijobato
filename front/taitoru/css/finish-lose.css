@@ -38,6 +38,8 @@
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.8s ease-out 0.3s, transform 0.8s ease-out 0.3s, background-color 0.2s;
+    position: relative;
+    bottom: 130px;
 }
 
 #retry-button:hover {
