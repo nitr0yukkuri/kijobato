@@ -7,6 +7,13 @@ const buttonGroup = document.querySelector('.button-group');
 
 buttons.forEach(button => {
     button.addEventListener('click', () => {
+    
+        // 1. クリックされたボタンから難易度を取得 (例: 'easy')
+        const selectedDifficulty = button.dataset.difficulty;
+        
+        // 2. 取得した難易度をブラウザに記憶させる
+        localStorage.setItem('gameDifficulty', selectedDifficulty);
+
         // ロゴ以外の要素を非表示にする
         if (instructionText) instructionText.style.display = 'none';
         if (buttonGroup) buttonGroup.style.display = 'none';
