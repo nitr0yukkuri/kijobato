@@ -5,16 +5,19 @@
     left: 50%;
     transform: translate(-50%, -50%);
 
-    /* 見た目の設定 */
+    /* ★変更点: ここから下のスタイルをgame.cssの.input-areaに合わせました */
     background-color: rgba(0, 0, 0, 0.75);
     border: 2px solid white;
     border-radius: 15px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    
+    /* 内側の余白はcpushikouのものを維持します */
     padding: 80px 120px;
 }
 
 .thinking-container p {
     margin: 0;
+    /* ★変更点: 文字色を白に */
     color: white;
     font-size: 2.5rem;
     font-weight: bold;

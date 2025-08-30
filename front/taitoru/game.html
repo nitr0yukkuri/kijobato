@@ -6,7 +6,9 @@
     <title>きじょパト - ゲーム画面</title>
     <link rel="stylesheet" href="./css/common.css">
     <link rel="stylesheet" href="./css/game.css">
-    <link rel="stylesheet" href="./css/cpu.css"> </head>
+    <link rel="stylesheet" href="./css/cpu.css">
+    <link rel="stylesheet" href="./css/cpushikou.css">
+</head>
 <body>
     <div class="background-container"></div>
     <img src="./png/kijobato (2).png" alt="きじょパト" class="game-logo">
@@ -14,23 +16,26 @@
     <div id="game-ui">
         <div class="timer">残り30秒</div>
         <div class="input-area">
-            <div id="feedback-message"></div> 
+            <div id="feedback-message"></div>
             <p>用語を入力してください</p>
             <input type="text" placeholder="テキストを入力">
         </div>
     </div>
-
     <div id="result-display" class="hidden">
-        <p>あなたの単語: <span id="user-input-display"></span></p>
-        <p>解説: <span id="answer-display"></span></p>
+        <p>あなたの入力: <span id="user-input-display"></span></p>
+        <p>答え: <span id="answer-display"></span></p>
     </div>
-    
     <div id="cpu-display" class="hidden">
-        <p>相手の単語: <span id="cpu-word-display"></span></p>
+        <p>CPUの単語: <span id="cpu-word-display"></span></p>
         <p>解説: <span id="cpu-answer-display"></span></p>
     </div>
 
-  
+    <div id="thinking-overlay" class="hidden"> <div class="thinking-container">
+            <p>相手熟考中...</p>
+        </div>
+    </div>
+
+    <script src="./js/cpu.js"></script>
     <script src="./js/game.js"></script>
 </body>
 </html>

@@ -3,7 +3,7 @@
     position: fixed;
     top: 20px;
     left: 20px;
-    max-width: 230px;
+    max-width: 300px;
     z-index: 100;
 }
 
@@ -39,6 +39,8 @@
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.8s ease-out 0.3s, transform 0.8s ease-out 0.3s, background-color 0.2s;
+     position: relative;
+    bottom: 50px; /* 数値が大きいほど、より上に移動します */
 }
 
 #retry-button:hover {
