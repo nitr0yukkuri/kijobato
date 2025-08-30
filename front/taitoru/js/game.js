@@ -1,6 +1,12 @@
 window.onload = () => {
     let timeLeft = 30;
-    const difficulty = 'easy'; // テスト用に 'easy' に設定中
+
+    // 1. タイトル画面で記憶した難易度をブラウザから読み込む
+    //    もし記憶されていなければ、'medium' をデフォルト値として使う
+    const difficulty = localStorage.getItem('gameDifficulty') || 'medium';
+    
+    // (デバッグ用) 実際に選択された難易度をコンソールに表示して確認
+    console.log('選択された難易度:', difficulty);
 
     const timerElement = document.querySelector('.timer');
     const inputElement = document.querySelector('.input-area input');
@@ -37,6 +43,7 @@ window.onload = () => {
         answerDisplay.textContent = '判定中...';
         inputElement.value = '';
 
+        // 2. サーバーに送るデータで、上で読み込んだ難易度(difficulty変数)を使う
         fetch('http://localhost:3000/api/turn', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -56,21 +63,14 @@ window.onload = () => {
             timeLeft = 30;
             timerElement.textContent = `残り${timeLeft}秒`;
 
-           
             if (data.cpuTimedOut) {
-                // CPUが単語を返せなかった場合
-                // alert(data.message); // ← この行を削除しました
-                
-                // 5秒後に勝利画面へ遷移
                 setTimeout(() => {
                     window.location.href = 'finish-win.html';
                 }, 5000);
             } else if (data.gameOver) {
-                // 全ての単語を使い切った場合
                 alert(data.message);
                 window.location.href = 'finish-win.html';
             } else {
-                // CPUが正常に単語を返した場合
                 setTimeout(() => {
                     updateCpuDisplay(data);
                     timeLeft = 30;
@@ -94,4 +94,3 @@ window.onload = () => {
         }
     }, 1000);
 };
-
