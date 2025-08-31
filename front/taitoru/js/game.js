@@ -26,7 +26,6 @@ window.onload = () => {
         cpuDisplay.classList.remove('hidden');
         if (wordData.word) {
             cpuTurnDisplay.textContent = `対戦相手が「${wordData.word}」という単語を入力しました`;
-            // ★変更点: hiddenクラスを削除して表示する
             cpuTurnDisplay.classList.remove('hidden');
         }
     }
@@ -44,16 +43,12 @@ window.onload = () => {
         const playerInputWord = inputElement.value;
         feedbackElement.textContent = '';
         if (!playerInputWord) return;
-
-        // ★変更点: プレイヤーが入力したらCPUの入力表示を隠す
-        cpuTurnDisplay.classList.add('hidden');
         
         userInputDisplay.textContent = playerInputWord;
         playerResultDisplay.classList.remove('hidden');
         answerDisplay.textContent = '判定中...';
         inputElement.value = '';
 
-        // 2. サーバーに送るデータで、上で読み込んだ難易度(difficulty変数)を使う
         fetch('http://localhost:3000/api/turn', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -74,9 +69,25 @@ window.onload = () => {
             timerElement.textContent = `残り${timeLeft}秒`;
 
             if (data.cpuTimedOut) {
+                // ★★★ ここからが修正箇所 ★★★
+                // 5秒待ってからメッセージ表示などの処理を行う
                 setTimeout(() => {
-                    window.location.href = 'finish-win.html';
-                }, 5000);
+                    clearInterval(countdown); // タイマーを停止
+
+                    const cpuStuckOverlay = document.getElementById('cpu-stuck-overlay');
+                    const cpuStuckButton = document.getElementById('cpu-stuck-button');
+
+                    if (cpuStuckOverlay && cpuStuckButton) {
+                        // メッセージ画面を表示
+                        cpuStuckOverlay.classList.remove('hidden');
+                        
+                        // 「了解」ボタンがクリックされたら勝利画面へ移動
+                        cpuStuckButton.addEventListener('click', () => {
+                            window.location.href = 'finish-win.html';
+                        });
+                    }
+                }, 5000); // 5000ミリ秒 = 5秒
+                // ★★★ 修正箇所ここまで ★★★
             } else if (data.gameOver) {
                 alert(data.message);
                 window.location.href = 'finish-win.html';
