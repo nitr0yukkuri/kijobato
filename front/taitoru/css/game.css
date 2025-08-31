@@ -22,6 +22,44 @@
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 
+/* ★★★★★ここから変更★★★★★ */
+
+/* 上部に表示するCPUの入力内容表示エリア */
+#cpu-turn-display {
+    /* .input-area のスタイルをコピー */
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.75);
+    border: 2px solid white;
+    width: 600px;
+    padding: 25px 40px; /* 高さをなくした分、paddingを調整 */
+    box-sizing: border-box;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+
+    /* .input-area p の文字スタイルをコピー */
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+
+    /* 位置をタイマーと中央入力エリアの間に調整 */
+    top: 15%; 
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    /* 表示・非表示のためのトランジション */
+    
+  
+}
+.hidden {
+    opacity: 0;
+    pointer-events: none; /* クリック等のイベントも無効化 */
+}
+
+
+/* ★★★★★ここまで変更★★★★★ */
+
+
 .input-area {
     position: fixed;
     top: 50%;
@@ -135,7 +173,6 @@
     opacity: 0;
     pointer-events: none;
 }
-/* front/taitoru/css/cpu.css */
 
 /* 右側に表示するCPUの結果エリア */
 #cpu-display {

@@ -17,11 +17,18 @@ window.onload = () => {
     const cpuDisplay = document.getElementById('cpu-display');
     const cpuWordDisplay = document.getElementById('cpu-word-display');
     const cpuAnswerDisplay = document.getElementById('cpu-answer-display');
+    // CPUの入力UIを取得
+    const cpuTurnDisplay = document.getElementById('cpu-turn-display');
 
     function updateCpuDisplay(wordData) {
         cpuWordDisplay.textContent = wordData.word;
         cpuAnswerDisplay.textContent = wordData.description;
         cpuDisplay.classList.remove('hidden');
+        if (wordData.word) {
+            cpuTurnDisplay.textContent = `対戦相手が「${wordData.word}」という単語を入力しました`;
+            // ★変更点: hiddenクラスを削除して表示する
+            cpuTurnDisplay.classList.remove('hidden');
+        }
     }
 
     fetch('http://localhost:3000/api/start')
@@ -38,6 +45,9 @@ window.onload = () => {
         feedbackElement.textContent = '';
         if (!playerInputWord) return;
 
+        // ★変更点: プレイヤーが入力したらCPUの入力表示を隠す
+        cpuTurnDisplay.classList.add('hidden');
+        
         userInputDisplay.textContent = playerInputWord;
         playerResultDisplay.classList.remove('hidden');
         answerDisplay.textContent = '判定中...';
