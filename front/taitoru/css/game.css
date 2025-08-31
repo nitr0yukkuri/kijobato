@@ -135,3 +135,41 @@
     opacity: 0;
     pointer-events: none;
 }
+/* front/taitoru/css/cpu.css */
+
+/* 右側に表示するCPUの結果エリア */
+#cpu-display {
+    position: fixed;
+    right: 50px; /* 左側と対になるように配置 */
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(220, 50, 50, 0.75); /* 色のみ変更 */
+    color: white;
+    padding: 25px;
+    width: 500px; /* 左側と幅を合わせる */
+    border-radius: 15px;
+    border: 2px solid white;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    opacity: 1;
+    transition: opacity 0.4s ease-in-out;
+}
+
+#cpu-display p {
+    margin: 0 0 10px 0;
+    font-weight: bold;
+}
+
+/* 一行目の文字サイズ */
+#cpu-display p:first-child {
+    font-size: 1.8rem;
+}
+
+/* 二行目の文字サイズ */
+#cpu-display p:last-child {
+    font-size: 1.2rem;
+    margin-bottom: 0;
+}
+
+#cpu-display span {
+    color: #ffdd57; /* 左側と色を合わせる */
+}
