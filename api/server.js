@@ -1,13 +1,17 @@
 const express = require('express');
 const cors = require('cors');
-const fs = require('fs');
-const path = require('path');
+// fs と path は require を使うので不要になります
+// const fs = require('fs');
+// const path = require('path');
 
 const app = express();
 const PORT = 3000;
 
-const wordsPath = path.join(__dirname, 'words.json');
-const wordsData = JSON.parse(fs.readFileSync(wordsPath, 'utf-8'));
+// ★★★ ここからが修正箇所 ★★★
+// fs.readFileSync の代わりに require を使って words.json を直接読み込みます。
+// この方法なら、Vercelがビルドする際に words.json を正しく含めてくれます。
+const wordsData = require('./words.json');
+// ★★★ 修正箇所ここまで ★★★
 
 app.use(cors());
 app.use(express.json());
@@ -60,14 +64,13 @@ app.post('/api/turn', (req, res) => {
   });
 });
 
-// ★★★ 修正箇所 ★★★
-// このファイルが直接 `node api/server.js` で実行された場合（ローカル環境）のみサーバーを起動します。
+// このファイルが直接実行された場合（ローカル環境）のみサーバーを起動する
 if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`サーバーがポート${PORT}で起動しました: http://localhost:${PORT}`);
   });
 }
 
-// Vercelから読み込まれた場合は、appオブジェクトをそのまま渡します。
+// Vercelで使われる場合は、appをエクスポートするだけ
 module.exports = app;
 
