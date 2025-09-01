@@ -25,17 +25,11 @@ app.get('/api/start', (req, res) => {
   usedWords = [];
   
   // CPUの最初の単語を返すように修正
-  const availableWords = wordsData.filter(w => !usedWords.includes(w.word));
-  if (availableWords.length > 0) {
-    const randomIndex = Math.floor(Math.random() * availableWords.length);
-    const cpuWordData = availableWords[randomIndex];
-    usedWords.push(cpuWordData.word);
-    res.json({ word: cpuWordData.word, description: cpuWordData.description });
-  } else {
+
     // 単語が一つもない場合はゲームオーバー
     res.json({ gameOver: true, message: '単語リストが空です！' });
   }
-});
+);
 
 app.post('/api/turn', (req, res) => {
   const { word: playerWord, difficulty = 'easy' } = req.body;
