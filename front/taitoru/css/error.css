@@ -1,0 +1,25 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center; /* 水平方向の中央揃え */
+    align-items: center;    /* 垂直方向の中央揃え */
+    background-color: #f8f9fa;
+    font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+}
+
+.error-container {
+    text-align: center;
+}
+
+#error-message {
+    font-size: 1.1em; /* 文字サイズを小さくしました */
+    color: #dc3545;   /* エラーを示す赤色 */
+    font-weight: bold;
+    padding: 15px 25px; /* 内側の余白を狭くしました */
+    border: 1px solid #dc3545; /* 枠線を細くしました */
+    border-radius: 6px;
+    background-color: #fbeaea; /* 末尾の「_a」を削除しました */
+}

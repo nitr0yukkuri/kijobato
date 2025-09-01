@@ -37,7 +37,8 @@ app.post('/api/turn', (req, res) => {
   const foundPlayerWord = wordsData.find(w => w.word.toLowerCase() === playerWord.toLowerCase());
 
   if (!foundPlayerWord) {
-    return res.json({ isValid: false, message: 'その単語はリストにありません！' });
+    // ★★★ この行のメッセージを変更しました ★★★
+    return res.json({ isValid: false, message: 'その言葉は存在しません' });
   }
   if (usedWords.includes(foundPlayerWord.word)) {
     return res.json({ isValid: false, message: 'その単語は既に使用されています！' });
