@@ -8,6 +8,13 @@ window.onload = () => {
     // (デバッグ用) 実際に選択された難易度をコンソールに表示して確認
     console.log('選択された難易度:', difficulty);
 
+    // ★★★ ここからがVercel対応のための最小限の変更 ★★★
+    // 現在のURLを見て、ローカル環境かVercel環境かを自動で判断し、APIの接続先を決定します。
+    const API_BASE_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+        ? 'http://localhost:3000' // PCでテストする場合
+        : '';                     // Vercelで公開する場合
+    // ★★★ 変更はここまで ★★★
+
     const timerElement = document.querySelector('.timer');
     const inputElement = document.querySelector('.input-area input');
     const feedbackElement = document.getElementById('feedback-message');
@@ -30,7 +37,8 @@ window.onload = () => {
         }
     }
 
-    fetch('http://localhost:3000/api/start')
+    // 上で定義した変数 `API_BASE_URL` を使って接続先を切り替えます
+    fetch(`${API_BASE_URL}/api/start`)
       .then(response => response.json())
       .then(updateCpuDisplay)
       .catch(error => {
@@ -49,7 +57,8 @@ window.onload = () => {
         answerDisplay.textContent = '判定中...';
         inputElement.value = '';
 
-        fetch('http://localhost:3000/api/turn', {
+        // 上で定義した変数 `API_BASE_URL` を使って接続先を切り替えます
+        fetch(`${API_BASE_URL}/api/turn`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ word: playerInputWord, difficulty: difficulty }),
@@ -69,7 +78,6 @@ window.onload = () => {
             timerElement.textContent = `残り${timeLeft}秒`;
 
             if (data.cpuTimedOut) {
-                // ★★★ ここからが修正箇所 ★★★
                 // 5秒待ってからメッセージ表示などの処理を行う
                 setTimeout(() => {
                     clearInterval(countdown); // タイマーを停止
@@ -87,7 +95,6 @@ window.onload = () => {
                         });
                     }
                 }, 5000); // 5000ミリ秒 = 5秒
-                // ★★★ 修正箇所ここまで ★★★
             } else if (data.gameOver) {
                 alert(data.message);
                 window.location.href = 'finish-win.html';
@@ -115,3 +122,4 @@ window.onload = () => {
         }
     }, 1000);
 };
+

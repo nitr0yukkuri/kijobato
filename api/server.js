@@ -60,6 +60,14 @@ app.post('/api/turn', (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`サーバーがポート${PORT}で起動しました: http://localhost:${PORT}`);
-});
+// ★★★ 修正箇所 ★★★
+// このファイルが直接 `node api/server.js` で実行された場合（ローカル環境）のみサーバーを起動します。
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`サーバーがポート${PORT}で起動しました: http://localhost:${PORT}`);
+  });
+}
+
+// Vercelから読み込まれた場合は、appオブジェクトをそのまま渡します。
+module.exports = app;
+
