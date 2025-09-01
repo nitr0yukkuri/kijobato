@@ -1,17 +1,15 @@
 const express = require('express');
 const cors = require('cors');
-// fs と path は require を使うので不要になります
-// const fs = require('fs');
-// const path = require('path');
+// const fs = require('fs'); // requireを使うので不要になります
+// const path = require('path'); // requireを使うので不要になります
 
 const app = express();
 const PORT = 3000;
 
-// ★★★ ここからが修正箇所 ★★★
+// ★★★ ここが最重要の変更点 ★★★
 // fs.readFileSync の代わりに require を使って words.json を直接読み込みます。
 // この方法なら、Vercelがビルドする際に words.json を正しく含めてくれます。
 const wordsData = require('./words.json');
-// ★★★ 修正箇所ここまで ★★★
 
 app.use(cors());
 app.use(express.json());
@@ -26,7 +24,17 @@ let usedWords = [];
 app.get('/api/start', (req, res) => {
   usedWords = [];
   
-  res.json({ word: '', description: '' });
+  // CPUの最初の単語を返すように修正
+  const availableWords = wordsData.filter(w => !usedWords.includes(w.word));
+  if (availableWords.length > 0) {
+    const randomIndex = Math.floor(Math.random() * availableWords.length);
+    const cpuWordData = availableWords[randomIndex];
+    usedWords.push(cpuWordData.word);
+    res.json({ word: cpuWordData.word, description: cpuWordData.description });
+  } else {
+    // 単語が一つもない場合はゲームオーバー
+    res.json({ gameOver: true, message: '単語リストが空です！' });
+  }
 });
 
 app.post('/api/turn', (req, res) => {
@@ -64,13 +72,12 @@ app.post('/api/turn', (req, res) => {
   });
 });
 
-// このファイルが直接実行された場合（ローカル環境）のみサーバーを起動する
+// ローカルテスト用とVercel用の両対応
 if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`サーバーがポート${PORT}で起動しました: http://localhost:${PORT}`);
   });
 }
 
-// Vercelで使われる場合は、appをエクスポートするだけ
 module.exports = app;
 
