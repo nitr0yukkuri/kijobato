@@ -2,7 +2,7 @@ window.onload = () => {
     let timeLeft = 30;
 
     // 1. タイトル画面で記憶した難易度をブラウザから読み込む
-    //    もし記憶されていなければ、'medium' をデフォルト値として使う
+    // 　 もし記憶されていなければ、'medium' をデフォルト値として使う
     const difficulty = localStorage.getItem('gameDifficulty') || 'medium';
     
     // (デバッグ用) 実際に選択された難易度をコンソールに表示して確認
@@ -12,7 +12,7 @@ window.onload = () => {
     // 現在のURLを見て、ローカル環境かVercel環境かを自動で判断し、APIの接続先を決定します。
     const API_BASE_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
         ? 'http://localhost:3000' // PCでテストする場合
-        : '';                     // Vercelで公開する場合
+        : '';                    // Vercelで公開する場合
     // ★★★ 変更はここまで ★★★
 
     const timerElement = document.querySelector('.timer');
@@ -50,9 +50,18 @@ window.onload = () => {
         if (event.key !== 'Enter') return;
         const playerInputWord = inputElement.value;
         feedbackElement.textContent = '';
-        if (!playerInputWord) return;
         
-        userInputDisplay.textContent = playerInputWord;
+        if (!playerInputWord) {
+            feedbackElement.textContent = 'まだ何も文字を入力してないです！';
+            playerResultDisplay.classList.remove('hidden');
+            userInputDisplay.textContent = ' '; // 表示崩れを防ぐため空文字ではなくスペースを入れる
+            answerDisplay.textContent = '---';
+            return; 
+        }
+        
+        // ★★★ 変更点(1): 先に単語を表示していたこの行を削除します ★★★
+        // userInputDisplay.textContent = playerInputWord; 
+        
         playerResultDisplay.classList.remove('hidden');
         answerDisplay.textContent = '判定中...';
         inputElement.value = '';
@@ -70,31 +79,30 @@ window.onload = () => {
             if (data.isValid === false) {
                 feedbackElement.textContent = data.message;
                 answerDisplay.textContent = '---';
+                // ★★★ 変更点(2): エラー時に単語が表示されないよう、念のため空にします ★★★
+                userInputDisplay.textContent = ' '; 
                 return;
             }
             
+            // ★★★ 変更点(3): サーバーからOKが返ってきた後で、単語を表示します ★★★
+            userInputDisplay.textContent = playerInputWord;
+
             answerDisplay.textContent = data.playerWordDescription;
             timeLeft = 30;
             timerElement.textContent = `残り${timeLeft}秒`;
 
             if (data.cpuTimedOut) {
-                // 5秒待ってからメッセージ表示などの処理を行う
                 setTimeout(() => {
-                    clearInterval(countdown); // タイマーを停止
-
+                    clearInterval(countdown); 
                     const cpuStuckOverlay = document.getElementById('cpu-stuck-overlay');
                     const cpuStuckButton = document.getElementById('cpu-stuck-button');
-
                     if (cpuStuckOverlay && cpuStuckButton) {
-                        // メッセージ画面を表示
                         cpuStuckOverlay.classList.remove('hidden');
-                        
-                        // 「了解」ボタンがクリックされたら勝利画面へ移動
                         cpuStuckButton.addEventListener('click', () => {
                             window.location.href = 'finish-win.html';
                         });
                     }
-                }, 5000); // 5000ミリ秒 = 5秒
+                }, 5000);
             } else if (data.gameOver) {
                 alert(data.message);
                 window.location.href = 'finish-win.html';
@@ -122,4 +130,3 @@ window.onload = () => {
         }
     }, 1000);
 };
-

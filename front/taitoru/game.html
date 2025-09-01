@@ -17,12 +17,13 @@
         <div class="timer">残り30秒</div>
         <div id="cpu-turn-display" class="hidden"></div>
         <div class="input-area">
-            <div id="feedback-message"></div>
             <p>用語を入力してください</p>
             <input type="text" placeholder="テキストを入力">
         </div>
     </div>
+    
     <div id="feedback-message" class="feedback"></div>
+
     <div id="result-display" class="hidden">
         <p>あなたの単語 <span id="user-input-display"></span></p>
         <p>解説 <span id="answer-display"></span></p>
@@ -32,17 +33,19 @@
         <p>解説<span id="cpu-answer-display"></span></p>
     </div>
 
-    <div id="thinking-overlay" class="hidden"> <div class="thinking-container">
+    <div id="thinking-overlay" class="hidden">
+        <div class="thinking-container">
             <p>相手熟考中...</p>
         </div>
     </div>
-<div id="cpu-stuck-overlay" class="hidden">
+    
+    <div id="cpu-stuck-overlay" class="hidden">
         <div class="thinking-container">
             <p>相手が単語を思いつかなかった... あなたの勝ちです！</p>
-             <button id="cpu-stuck-button">OK</button>
+            <button id="cpu-stuck-button">OK</button>
         </div>
     </div>
-    <script src="./js/game.js"></script> </body>
+    
     <script src="./js/cpu.js"></script>
     <script src="./js/game.js"></script>
 </body>

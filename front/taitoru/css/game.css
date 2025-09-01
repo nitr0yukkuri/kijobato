@@ -210,3 +210,31 @@
 #cpu-display span {
     color: #ffdd57; /* 左側と色を合わせる */
 }
+/* game.css の一番下に追加 */
+
+/* エラーメッセージのデザイン */
+#feedback-message {
+    top: 340px;
+    font-size: 1.3em;
+    color: yellow;
+    font-weight: bold;
+    padding: 15px 25px;
+    
+    border-radius: 6px;
+    
+    
+    /* 元からあるfeedbackクラスとデザインが混ざらないように調整 */
+    margin: 15px auto;
+    text-align: center;
+    
+    /* 最初は非表示にしておき、文字が入った時だけ表示されるようにする */
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+/* 文字が入った時だけ表示 */
+#feedback-message:not(:empty) {
+    visibility: visible;
+    opacity: 1;
+}
