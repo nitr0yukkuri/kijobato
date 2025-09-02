@@ -1,19 +1,14 @@
 window.onload = () => {
     let timeLeft = 30;
-
-    // 1. タイトル画面で記憶した難易度をブラウザから読み込む
-    // 　 もし記憶されていなければ、'medium' をデフォルト値として使う
     const difficulty = localStorage.getItem('gameDifficulty') || 'medium';
-    
-    // (デバッグ用) 実際に選択された難易度をコンソールに表示して確認
     console.log('選択された難易度:', difficulty);
 
-    // ★★★ ここからがVercel対応のための最小限の変更 ★★★
-    // 現在のURLを見て、ローカル環境かVercel環境かを自動で判断し、APIの接続先を決定します。
+    let lastValidWord = '';
+    let lastValidDescription = '';
+
     const API_BASE_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-        ? 'http://localhost:3000' // PCでテストする場合
-        : '';                    // Vercelで公開する場合
-    // ★★★ 変更はここまで ★★★
+        ? 'http://localhost:3000'
+        : '';
 
     const timerElement = document.querySelector('.timer');
     const inputElement = document.querySelector('.input-area input');
@@ -24,8 +19,8 @@ window.onload = () => {
     const cpuDisplay = document.getElementById('cpu-display');
     const cpuWordDisplay = document.getElementById('cpu-word-display');
     const cpuAnswerDisplay = document.getElementById('cpu-answer-display');
-    // CPUの入力UIを取得
     const cpuTurnDisplay = document.getElementById('cpu-turn-display');
+    const thinkingOverlay = document.getElementById('thinking-overlay');
 
     function updateCpuDisplay(wordData) {
         cpuWordDisplay.textContent = wordData.word;
@@ -34,10 +29,11 @@ window.onload = () => {
         if (wordData.word) {
             cpuTurnDisplay.textContent = `対戦相手が「${wordData.word}」という単語を入力しました`;
             cpuTurnDisplay.classList.remove('hidden');
+        } else {
+            cpuTurnDisplay.classList.add('hidden');
         }
     }
 
-    // 上で定義した変数 `API_BASE_URL` を使って接続先を切り替えます
     fetch(`${API_BASE_URL}/api/start`)
       .then(response => response.json())
       .then(updateCpuDisplay)
@@ -53,20 +49,11 @@ window.onload = () => {
         
         if (!playerInputWord) {
             feedbackElement.textContent = 'まだ何も文字を入力してないです！';
-            playerResultDisplay.classList.remove('hidden');
-            userInputDisplay.textContent = ' '; // 表示崩れを防ぐため空文字ではなくスペースを入れる
-            answerDisplay.textContent = '---';
             return; 
         }
         
-        // ★★★ 変更点(1): 先に単語を表示していたこの行を削除します ★★★
-        // userInputDisplay.textContent = playerInputWord; 
-        
-        playerResultDisplay.classList.remove('hidden');
-        answerDisplay.textContent = '判定中...';
         inputElement.value = '';
 
-        // 上で定義した変数 `API_BASE_URL` を使って接続先を切り替えます
         fetch(`${API_BASE_URL}/api/turn`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -78,21 +65,36 @@ window.onload = () => {
             
             if (data.isValid === false) {
                 feedbackElement.textContent = data.message;
-                answerDisplay.textContent = '---';
-                // ★★★ 変更点(2): エラー時に単語が表示されないよう、念のため空にします ★★★
-                userInputDisplay.textContent = ' '; 
                 return;
             }
             
-            // ★★★ 変更点(3): サーバーからOKが返ってきた後で、単語を表示します ★★★
+            playerResultDisplay.classList.remove('hidden');
             userInputDisplay.textContent = playerInputWord;
-
             answerDisplay.textContent = data.playerWordDescription;
+
+            lastValidWord = playerInputWord;
+            lastValidDescription = data.playerWordDescription;
+            
             timeLeft = 30;
             timerElement.textContent = `残り${timeLeft}秒`;
+            
+            // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+            // ★★★ ここからがあなたの指示による変更点です ★★★
+            // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 
-            if (data.cpuTimedOut) {
-                setTimeout(() => {
+            // 1. CPUが成功しようが失敗しようが、まず「思考中」画面を表示
+            thinkingOverlay.classList.remove('hidden');
+
+            // 2. 待機時間を決める (失敗時は5秒、成功時はサーバーからの指定時間)
+            const delay = data.cpuTimedOut ? 5000 : data.cpuDelay;
+
+            // 3. 待機処理を開始
+            setTimeout(() => {
+                // 4. 待機が終わったら、まず「思考中」画面を隠す
+                thinkingOverlay.classList.add('hidden');
+
+                // 5. その後で、結果に応じた処理を行う
+                if (data.cpuTimedOut) {
                     clearInterval(countdown); 
                     const cpuStuckOverlay = document.getElementById('cpu-stuck-overlay');
                     const cpuStuckButton = document.getElementById('cpu-stuck-button');
@@ -102,17 +104,15 @@ window.onload = () => {
                             window.location.href = 'finish-win.html';
                         });
                     }
-                }, 5000);
-            } else if (data.gameOver) {
-                alert(data.message);
-                window.location.href = 'finish-win.html';
-            } else {
-                setTimeout(() => {
+                } else if (data.gameOver) {
+                    alert(data.message);
+                    window.location.href = 'finish-win.html';
+                } else {
                     updateCpuDisplay(data);
                     timeLeft = 30;
                     timerElement.textContent = `残り${timeLeft}秒`;
-                }, data.cpuDelay);
-            }
+                }
+            }, delay);
         })
         .catch(error => {
             console.error('通信エラー:', error);
