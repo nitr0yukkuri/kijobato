@@ -1,3 +1,4 @@
+/* 「相手熟考中...」のスタイル */
 .thinking-container {
     /* 画面のど真ん中に配置 */
     position: fixed;
@@ -5,34 +6,66 @@
     left: 50%;
     transform: translate(-50%, -50%);
 
-    /* ★変更点: ここから下のスタイルをgame.cssの.input-areaに合わせました */
-    background-color: rgba(0, 0, 0, 0.75);
+    /* ★★★★★ ここからが変更点です ★★★★★ */
+    /* 「用語を入力してください」のボックスと全く同じサイズと配置方法を指定 */
+    width: 600px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    /* ★★★★★ 変更点はここまでです ★★★★★ */
+
+    /* ↓↓↓以下の見た目に関するスタイルは一切変更していません↓↓↓ */
+    background-color: rgba(0, 0, 0, 22);
     border: 2px solid white;
     border-radius: 15px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    
-    /* 内側の余白はcpushikouのものを維持します */
-    padding: 80px 120px;
 }
 
 .thinking-container p {
     margin: 0;
-    /* ★変更点: 文字色を白に */
     color: white;
-    /* ★★★ ここを修正しました ★★★ */
-    font-size: 2.2rem; /* ← 2.5rem から小さくしました */
+    font-size: 2.2rem;
     font-weight: bold;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
+
+/* ↓↓↓「相手が単語を思いつかなかった」のスタイルは一切変更していません↓↓↓ */
+.cpu-stuck-container {
+    /* thinking-container と全く同じスタイルをコピー */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 1);
+    border: 2px solid white;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    padding: 80px 1px;
+    text-align: center; /* ボタンのために中央揃えを追加 */
+    width: 600px;
+    height: 300px%;
+}
+
+.cpu-stuck-container p {
+    /* thinking-container p と同じスタイルをコピー */
+    margin-top: 10px;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    left: 100px;
+}
+
 #cpu-stuck-button {
-    /* ★★★ ここからが変更点 ★★★ */
-    position: relative; /* 位置を調整するための基準を追加 */
-    left: 300px;        /* 元の位置から右に30pxずらす */
-    /* ★★★ 変更点ここまで ★★★ */
+    /* 位置の調整 */
+   
+
 
     /* 大きさと余白 */
-    margin-top: 30px;
     padding: 15px 40px;
     font-size: 1.2rem;
     
