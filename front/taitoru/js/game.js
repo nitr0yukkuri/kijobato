@@ -75,25 +75,17 @@ window.onload = () => {
             lastValidWord = playerInputWord;
             lastValidDescription = data.playerWordDescription;
             
-            timeLeft = 30;
+            // プレイヤーのターンが終わったので、CPUのターン時間(5秒)にリセット
+            timeLeft = 5;
             timerElement.textContent = `残り${timeLeft}秒`;
             
-            // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
-            // ★★★ ここからがあなたの指示による変更点です ★★★
-            // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
-
-            // 1. CPUが成功しようが失敗しようが、まず「思考中」画面を表示
             thinkingOverlay.classList.remove('hidden');
 
-            // 2. 待機時間を決める (失敗時は5秒、成功時はサーバーからの指定時間)
             const delay = data.cpuTimedOut ? 5000 : data.cpuDelay;
 
-            // 3. 待機処理を開始
             setTimeout(() => {
-                // 4. 待機が終わったら、まず「思考中」画面を隠す
                 thinkingOverlay.classList.add('hidden');
 
-                // 5. その後で、結果に応じた処理を行う
                 if (data.cpuTimedOut) {
                     clearInterval(countdown); 
                     const cpuStuckOverlay = document.getElementById('cpu-stuck-overlay');
@@ -109,6 +101,8 @@ window.onload = () => {
                     window.location.href = 'finish-win.html';
                 } else {
                     updateCpuDisplay(data);
+        
+                    // CPUのターンが終わったので、プレイヤーのターン時間(30秒)にリセット
                     timeLeft = 30;
                     timerElement.textContent = `残り${timeLeft}秒`;
                 }
