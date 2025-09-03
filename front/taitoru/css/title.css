@@ -8,7 +8,7 @@
     text-align: center;
     padding: 20px;
     box-sizing: border-box;
-    background-color: rgba(0, 0, 0, 0.2);
+    
 }
 
 /* ===== タイトル (画像ロゴ用) ===== */
@@ -16,7 +16,7 @@
     max-width: 400px;
     height: auto;
     margin-bottom: 10px;
-    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.7));
+   
 }
 
 /* ===== 説明テキスト ===== */
@@ -44,7 +44,7 @@
     font-weight: bold;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.4), inset 0 2px 3px rgba(255,255,255,0.3);
+
     position: relative;
     border: 4px solid white;
 }
