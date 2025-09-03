@@ -26,6 +26,15 @@
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
+/* ボタンを横に並べるためのコンテナ */
+.button-container {
+    display: flex;
+    /* ★★★★★ この数値を大きくして、ボタンの間隔を広げました ★★★★★ */
+    gap: 180px; /* ← 20pxから40pxに変更 */
+    position: relative;
+    bottom: 130px;
+}
+
 #retry-button {
     padding: 15px 40px;
     font-size: 1.5rem;
@@ -38,18 +47,37 @@
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.8s ease-out 0.3s, transform 0.8s ease-out 0.3s, background-color 0.2s;
-    position: relative;
-    bottom: 130px;
+}
+
+/* 「使った単語一覧」ボタンのスタイル */
+#word-list-button {
+    padding: 15px 40px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    background-color: #f0f0f0;
+    border: 2px solid white;
+    border-radius: 50px;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out 0.5s, transform 0.8s ease-out 0.5s, background-color 0.2s;
 }
 
 #retry-button:hover {
     background-color: #4db8ff;
-    transform: translateY(0) scale(1.05); /* 表示後の位置で拡大 */
+    transform: translateY(0) scale(1.05);
+}
+
+#word-list-button:hover {
+    background-color: #ddd;
+    transform: translateY(0) scale(1.05);
 }
 
 /* 表示時に付けるクラス */
 .result-container.show #result-image,
-.result-container.show #retry-button {
+.result-container.show #retry-button,
+.result-container.show #word-list-button {
     opacity: 1;
     transform: translateY(0);
 }

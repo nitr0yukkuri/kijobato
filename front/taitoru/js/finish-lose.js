@@ -1,21 +1,26 @@
 // ページが読み込まれたら実行
 window.onload = () => {
     const retryButton = document.getElementById('retry-button');
-    const resultContainer = document.querySelector('.result-container'); // ★重要：結果コンテナを取得
+    const resultContainer = document.querySelector('.result-container');
 
-    // ★重要：この部分でアニメーションを開始させています
     if (resultContainer) {
-        // ページロード時にフェードインアニメーションを開始
         setTimeout(() => {
             resultContainer.classList.add('show');
         }, 100); 
     }
 
-    // 「もう一度挑戦する」ボタンがクリックされたら
     if (retryButton) {
         retryButton.addEventListener('click', () => {
-            // タイトル画面 (index.html) に戻る
             window.location.href = 'index.html';
         });
     }
+
+    // ★★★★★ ここからが唯一の追加点です ★★★★★
+    const wordListButton = document.getElementById('word-list-button');
+    if (wordListButton) {
+        wordListButton.addEventListener('click', () => {
+            window.location.href = 'word-list.html';
+        });
+    }
+    // ★★★★★ 追加点はここまでです ★★★★★
 };
