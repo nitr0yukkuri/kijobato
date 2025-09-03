@@ -47,7 +47,7 @@
     padding: 80px 1px;
     text-align: center; /* ボタンのために中央揃えを追加 */
     width: 600px;
-    height: 300px%;
+    height: 300px;
 }
 
 .cpu-stuck-container p {
@@ -62,9 +62,6 @@
 
 #cpu-stuck-button {
     /* 位置の調整 */
-   
-
-
     /* 大きさと余白 */
     padding: 15px 40px;
     font-size: 1.2rem;
