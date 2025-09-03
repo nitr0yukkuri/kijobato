@@ -1,14 +1,10 @@
 const express = require('express');
 const cors = require('cors');
-// const fs = require('fs'); // requireを使うので不要になります
-// const path = require('path'); // requireを使うので不要になります
 
 const app = express();
 const PORT = 3000;
 
-// ★★★ ここが最重要の変更点 ★★★
-// fs.readFileSync の代わりに require を使って words.json を直接読み込みます。
-// この方法なら、Vercelがビルドする際に words.json を正しく含めてくれます。
+// Vercelで正しく動作するように、require() を使って words.json を読み込みます。
 const wordsData = require('./words.json');
 
 app.use(cors());
@@ -24,12 +20,9 @@ let usedWords = [];
 app.get('/api/start', (req, res) => {
   usedWords = [];
   
-  // CPUの最初の単語を返すように修正
-
-    // 単語が一つもない場合はゲームオーバー
-    res.json({ gameOver: true, message: '単語リストが空です！' });
-  }
-);
+  // 構文エラーを修正し、ゲーム開始時は空のデータを返すように戻しました
+  res.json({ word: '', description: '' });
+});
 
 app.post('/api/turn', (req, res) => {
   const { word: playerWord, difficulty = 'easy' } = req.body;
@@ -37,7 +30,6 @@ app.post('/api/turn', (req, res) => {
   const foundPlayerWord = wordsData.find(w => w.word.toLowerCase() === playerWord.toLowerCase());
 
   if (!foundPlayerWord) {
-    // ★★★ この行のメッセージを変更しました ★★★
     return res.json({ isValid: false, message: 'その言葉は存在しません' });
   }
   if (usedWords.includes(foundPlayerWord.word)) {
@@ -66,6 +58,19 @@ app.post('/api/turn', (req, res) => {
     ...cpuWordData
   });
 });
+
+// ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+// ★★★ ここがあなたの指示による変更点です ★★★
+// ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+// 使用済み単語のリストと解説を返すための新しいAPIを追加
+app.get('/api/used-words', (req, res) => {
+  const detailedUsedWords = usedWords.map(usedWord => {
+    return wordsData.find(wordObject => wordObject.word === usedWord);
+  }).filter(item => item); // 見つからなかった単語を除外
+
+  res.json(detailedUsedWords);
+});
+
 
 // ローカルテスト用とVercel用の両対応
 if (require.main === module) {
