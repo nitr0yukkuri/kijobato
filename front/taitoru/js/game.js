@@ -48,7 +48,7 @@ window.onload = () => {
         feedbackElement.textContent = '';
         
         if (!playerInputWord) {
-            feedbackElement.textContent = 'まだ何も文字を入力してないです！';
+            feedbackElement.textContent = 'まだ何も入力していません！';
             return; 
         }
         
