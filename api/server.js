@@ -4,8 +4,26 @@ const cors = require('cors');
 const app = express();
 const PORT = 3000;
 
-// Vercelで正しく動作するように、require() を使って words.json を読み込みます。
-const wordsData = require('./words.json');
+// ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+// ★★★ ここからが最小限の変更点です ★★★
+// ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+
+// 1. 読み込むファイルの一覧を配列で定義します
+const fileNames = [
+  'database.json',
+  'network.json',
+];
+
+// 2. 各ファイルを読み込み、flat() を使って1つの巨大な配列に合体させます
+const wordsData = fileNames
+  .map(fileName => require(`./${fileName}`))
+  .flat();
+
+console.log(`合計 ${wordsData.length} 個の単語を読み込みました。`);
+
+// ★★★ 変更点はここまでです ★★★
+// ★★★ これ以降のコードは一切変更していません ★★★
+// ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 
 app.use(cors());
 app.use(express.json());
@@ -20,7 +38,6 @@ let usedWords = [];
 app.get('/api/start', (req, res) => {
   usedWords = [];
   
-  // 構文エラーを修正し、ゲーム開始時は空のデータを返すように戻しました
   res.json({ word: '', description: '' });
 });
 
@@ -59,10 +76,7 @@ app.post('/api/turn', (req, res) => {
   });
 });
 
-// ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
-// ★★★ ここがあなたの指示による変更点です ★★★
-// ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
-// 使用済み単語のリストと解説を返すための新しいAPIを追加
+// 使用済み単語のリストと解説を返すための新しいAPI
 app.get('/api/used-words', (req, res) => {
   const detailedUsedWords = usedWords.map(usedWord => {
     return wordsData.find(wordObject => wordObject.word === usedWord);
@@ -80,4 +94,3 @@ if (require.main === module) {
 }
 
 module.exports = app;
-
