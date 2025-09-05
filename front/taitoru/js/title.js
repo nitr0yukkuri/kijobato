@@ -5,6 +5,9 @@ const logo = document.querySelector('.game-logo');
 const instructionText = document.querySelector('.instruction');
 const buttonGroup = document.querySelector('.button-group');
 
+// ★★★ 変更点1: ヘルプボタンのコンテナを取得します ★★★
+const helpLinkContainer = document.querySelector('.help-link-container');
+
 buttons.forEach(button => {
     button.addEventListener('click', () => {
     
@@ -17,6 +20,9 @@ buttons.forEach(button => {
         // ロゴ以外の要素を非表示にする
         if (instructionText) instructionText.style.display = 'none';
         if (buttonGroup) buttonGroup.style.display = 'none';
+
+        // ★★★ 変更点2: ヘルプボタンを非表示にします ★★★
+        if (helpLinkContainer) helpLinkContainer.style.display = 'none';
 
         // ロゴに新しいクラスを付けて、左上に瞬間移動させる
         if (logo) logo.classList.add('logo-top-left');
