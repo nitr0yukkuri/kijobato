@@ -124,3 +124,43 @@
 }
 #start-animation-overlay.active img { transform: translateX(0); }
 #start-animation-overlay.exit img { transform: translateX(-150%); }
+
+/* ===== ヘルプボタンのスタイル ===== */
+
+.help-link-container {
+    /* ボタンを画面の右上に固定します */
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100; /* 他の要素より手前に表示 */
+}
+
+.help-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* 円のサイズ */
+    width: 50px;
+    height: 50px;
+    
+    /* 見た目 */
+    background-color: rgba(255, 255, 255, 0.3); /* 少し透明な白 */
+    color: white;
+    border: 2px solid white;
+    border-radius: 50%; /* 正円にする */
+    text-decoration: none; /* リンクの下線を消す */
+    
+    /* 中の「？」のスタイル */
+    font-size: 28px;
+    font-weight: bold;
+    
+    /* アニメーション */
+    transition: all 0.2s ease-in-out;
+}
+
+.help-link:hover {
+    background-color: white;
+    color: black;
+    transform: scale(1.1); /* 少し大きくする */
+}

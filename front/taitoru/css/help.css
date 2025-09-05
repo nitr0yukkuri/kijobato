@@ -1,0 +1,87 @@
+body {
+    color: white;
+    text-align: center;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+
+    /* Flexboxを使って、ページ内容全体を画面の上下中央に配置します */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 垂直方向の中央揃え */
+    align-items: center;     /* 水平方向の中央揃え (text-align:centerと役割が似ていますが、より強力です) */
+    min-height: 100vh;       /* ページの最小の高さを画面の高さと揃えます */
+    margin: 0;               /* bodyが持つデフォルトの余白をリセット */
+}
+
+.game-logo {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    max-width: 300px;
+    z-index: 100;
+}
+
+h1 {
+    font-size: 2.5rem;
+    /* bodyで中央揃えするため、個別のmargin-topは不要になります */
+    /* margin-top: 40px; */ 
+    margin: 10px;
+    text-shadow: 2px 2px 5px #000;
+}
+
+.help-container {
+    width: 90%;
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 2px solid #fff;
+    border-radius: 15px;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+.help-text {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    text-align: left;
+    margin-bottom: 20px;
+    margin-top: 0;
+}
+
+.help-text:last-child {
+    margin-bottom: 0;
+}
+
+.button-container {
+    margin-top: 20px;
+}
+
+#back-to-title-button {
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#back-to-title-button:hover {
+    background-color: #ddd;
+}
+
+.text-hard {
+    color: #ff5c5c; /* 赤色 */
+    text-shadow: 1px 1px 3px #000;
+}
+
+.text-medium {
+    color: #78EF80; /* 緑色 */
+    text-shadow: 1px 1px 3px #000;
+}
+
+.text-easy {
+    color: #4aa9e8; /* 青色 */
+    text-shadow: 1px 1px 3px #000;
+}
