@@ -142,6 +142,7 @@
   {
     "id": 209,
     "word": "排他的論理和",
+    "aliases": ["XOR","xor"], 
     "description": "2つの命題の真偽が異なるときに真となる論理演算。XOR演算。"
   },
   {
@@ -152,7 +153,6 @@
   {
     "id": 211,
     "word": "否定論理積",
-    "aliases": ["XOR","xor"], 
     "description": "論理積(AND)の結果を否定(NOT)する論理演算。NAND演算。"
   },
   {
