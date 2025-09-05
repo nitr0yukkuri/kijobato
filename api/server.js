@@ -8,6 +8,7 @@ const PORT = 3000;
 const fileNames = [
   'database.json',
   'network.json',
+  'kisorironn.json'
 ];
 
 // 2. 各ファイルを読み込み、flat() を使って1つの巨大な配列に合体させます
@@ -36,7 +37,20 @@ app.get('/api/start', (req, res) => {
 app.post('/api/turn', (req, res) => {
   const { word: playerWord, difficulty = 'easy' } = req.body;
   const settings = difficultySettings[difficulty];
-  const foundPlayerWord = wordsData.find(w => w.word.toLowerCase() === playerWord.toLowerCase());
+
+  // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+  // ★★★ ここからが最小限の変更点です ★★★
+  // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+  const playerInput = playerWord.toLowerCase();
+
+  // wordキー、またはaliases配列内のいずれかと一致するかをチェック
+  const foundPlayerWord = wordsData.find(w =>
+    w.word.toLowerCase() === playerInput || // 1. メインの単語をチェック
+    (w.aliases && w.aliases.some(alias => alias.toLowerCase() === playerInput)) // 2. 別名リストをチェック
+  );
+  // ★★★ 変更点はここまでです ★★★
+  // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+
 
   if (!foundPlayerWord) {
     return res.json({ isValid: false, message: 'その言葉は存在しません！' });
