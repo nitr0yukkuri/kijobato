@@ -4,10 +4,6 @@ const cors = require('cors');
 const app = express();
 const PORT = 3000;
 
-// ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
-// ★★★ ここからが最小限の変更点です ★★★
-// ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
-
 // 1. 読み込むファイルの一覧を配列で定義します
 const fileNames = [
   'database.json',
@@ -20,10 +16,6 @@ const wordsData = fileNames
   .flat();
 
 console.log(`合計 ${wordsData.length} 個の単語を読み込みました。`);
-
-// ★★★ 変更点はここまでです ★★★
-// ★★★ これ以降のコードは一切変更していません ★★★
-// ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 
 app.use(cors());
 app.use(express.json());
@@ -53,8 +45,20 @@ app.post('/api/turn', (req, res) => {
     return res.json({ isValid: false, message: 'その単語は既に使用されています！' });
   }
   usedWords.push(foundPlayerWord.word);
+  
+  let currentSuccessRate = settings.successRate;
 
-  const isSuccess = Math.random() < settings.successRate;
+  if (difficulty === 'medium' && usedWords.length < 20) {
+    currentSuccessRate = 1.0;
+  } 
+  // もし難易度が'easy'で、かつ使用済み単語数が6未満の場合
+  else if (difficulty === 'easy' && usedWords.length < 6) {
+    // 成功率を一時的に1.0 (100%) に上書き
+    currentSuccessRate = 1.0;
+  }
+
+  const isSuccess = Math.random() < currentSuccessRate;
+
   if (!isSuccess) {
     return res.json({ isValid: true, playerWordDescription: foundPlayerWord.description, cpuTimedOut: true, message: 'CPUが時間内に単語を思いつけませんでした。あなたの勝ちです！' });
   }

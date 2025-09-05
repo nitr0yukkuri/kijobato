@@ -75,11 +75,13 @@ window.onload = () => {
             lastValidWord = playerInputWord;
             lastValidDescription = data.playerWordDescription;
             
-            // プレイヤーのターンが終わったので、CPUのターン時間(5秒)にリセット
             timeLeft = 5;
             timerElement.textContent = `残り${timeLeft}秒`;
             
             thinkingOverlay.classList.remove('hidden');
+            
+            // ★★★ 変更点1: CPU思考中は入力欄を無効にする ★★★
+            inputElement.disabled = true;
 
             const delay = data.cpuTimedOut ? 5000 : data.cpuDelay;
 
@@ -101,10 +103,15 @@ window.onload = () => {
                     window.location.href = 'finish-win.html';
                 } else {
                     updateCpuDisplay(data);
-        
-                    // CPUのターンが終わったので、プレイヤーのターン時間(30秒)にリセット
+                    
                     timeLeft = 30;
                     timerElement.textContent = `残り${timeLeft}秒`;
+                    
+                    // ★★★ 変更点2: プレイヤーのターンになったら入力欄を有効に戻す ★★★
+                    inputElement.disabled = false;
+                    
+                    // ★★★ 変更点3: すぐ入力できるようにフォーカスを当てる ★★★
+                    inputElement.focus();
                 }
             }, delay);
         })
