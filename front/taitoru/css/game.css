@@ -239,16 +239,26 @@
     opacity: 1;
 }
 /* responsive.css */
+/* responsive.css */
 @media (max-width: 768px) {
-    /* 1. 「相手熟考中...」の文字サイズ調整 */
-    .thinking-container p {
-        /* スマホ用に文字サイズを調整 */
-        font-size: 1.5rem; /* 入力エリアの文字サイズに合わせる */
+    /* 熟考中コンテナと入力エリアを同じに設定 */
+    .thinking-container,
+    .input-area {
+        position: relative;
+        width: 90%;
+        max-width: 500px;
+        height: auto;
+        min-height: 200px;
+        margin: 80px auto;
+        padding: 30px 10px;
+        left: auto;
+        top: auto;
+        transform: none;
     }
 
-    /* 2. 「用語を入力してください」の文字サイズ調整 */
+    /* 両方のpタグの文字サイズを統一 */
+    .thinking-container p,
     .input-area p {
-        /* スマホ用に文字サイズを調整 */
-        font-size: 1.5rem; /* 思考中の文字サイズに合わせる */
+        font-size: 1.3rem;
     }
 }
