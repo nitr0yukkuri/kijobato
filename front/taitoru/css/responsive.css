@@ -14,7 +14,7 @@
 
     body {
         /* スマホでは縦スクロールを許可する (横スクロールは禁止) */
-        overflow-y: auto;
+       
         overflow-x: hidden;
     }
 
