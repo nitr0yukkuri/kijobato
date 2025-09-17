@@ -30,40 +30,69 @@
 .button-container {
     display: flex;
     /* ★★★★★ この数値を大きくして、ボタンの間隔を広げました ★★★★★ */
-    gap: 180px; /* ← 20pxから40pxに変更 */
+    gap: 1px; /* ← 20pxから40pxに変更 */
     position: relative;
     bottom: 130px;
 }
-
 #retry-button {
-    padding: 15px 40px;
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: white;
-    background-color: #3498db;
-    border: 2px solid white;
-    border-radius: 50px;
-    cursor: pointer;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s ease-out 0.3s, transform 0.8s ease-out 0.3s, background-color 0.2s;
+  /* 幅を100%に */
+  width: 140%;
+  height: 100%;
+ 
+  box-sizing: border-box; /* paddingとborderを幅に含める */
+
+  /* ↓ テキストを改行させない */
+  
+
+  /* ↓ エラーを修正 (以前の値に戻しました) */
+  padding: 10px 50px; 
+  font-size: 1.4rem;  
+
+  font-weight: bold;
+  color: white;
+  background-color: #3498db;
+  border: 2px solid white;
+  border-radius: 50px;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease-out 0.3s, transform 0.8s ease-out 0.3s, background-color 0.2s;
 }
 
 /* 「使った単語一覧」ボタンのスタイル */
 #word-list-button {
-    padding: 15px 40px;
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #333;
-    background-color: #f0f0f0;
-    border: 2px solid white;
-    border-radius: 50px;
-    cursor: pointer;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s ease-out 0.5s, transform 0.8s ease-out 0.5s, background-color 0.2s;
+  /* 幅を100%に */
+  width: 140%;
+  /*height: 70%; */
+  box-sizing: border-box; /* paddingとborderを幅に含める */
+
+  /* ↓ テキストを改行させない */
+  white-space: nowrap;
+
+  /* ↓ retry-buttonと値を揃える */
+  padding: 15px 50px;
+  font-size: 1.4rem; 
+
+  font-weight: bold;
+  color: #333;
+  background-color: #f0f0f0;
+  border: 2px solid white;
+  border-radius: 50px;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease-out 0.5s, transform 0.8s ease-out 0.5s, background-color 0.2s;
 }
 
+#retry-button:hover {
+  background-color: #4db8ff;
+  transform: translateY(0) scale(1.05);
+}
+
+#word-list-button:hover {
+  background-color: #ddd;
+  transform: translateY(0) scale(1.05);
+}
 #retry-button:hover {
     background-color: #4db8ff;
     transform: translateY(0) scale(1.05);
