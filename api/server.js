@@ -11,6 +11,7 @@ const fileNames = [
   'kisorironn.json'
 ];
 
+
 // 2. 各ファイルを読み込み、flat() を使って1つの巨大な配列に合体させます
 const wordsData = fileNames
   .map(fileName => require(`./${fileName}`))
