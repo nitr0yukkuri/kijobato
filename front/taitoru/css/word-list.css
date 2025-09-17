@@ -80,3 +80,14 @@ h1 {
     max-width: 300px;
     z-index: 100;
 }
+@media (max-width: 768px) {
+  /* スマホやタブレット向けの設定 */
+  .game-logo {
+    display: none;
+  }
+  
+  h1 {
+    font-size: 1.5rem; /* スマートフォンでの文字サイズ */
+  
+}
+}

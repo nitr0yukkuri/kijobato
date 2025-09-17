@@ -54,7 +54,7 @@
 
     /* スマホ画面では装飾用のキャラ画像を非表示にする */
     .btn .character {
-        width: px;
+       
         height: auto; /* 縦横比を維持する */
     }
 
