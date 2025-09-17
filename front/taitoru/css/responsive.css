@@ -1,0 +1,324 @@
+/*
+ * ファイル名: front/taitoru/css/responsive.css
+ * 概要: スマートフォン＆タブレット用の上書きスタイル
+ */
+
+/* * 画面幅が768px以下のデバイス（タブレットやスマートフォン）に適用
+ */
+@media (max-width: 768px) {
+
+    /* --- 1. 全体設定 (common.css の調整) --- */
+    html {
+        /* rem単位の基準フォントサイズを少し小さくし、UI全体をスケーリング */
+        font-size: 14px;
+    }
+
+    body {
+        /* スマホでは縦スクロールを許可する (横スクロールは禁止) */
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+
+    /* --- 2. タイトル画面 (title.css の調整) --- */
+    
+    .logo-top-left {
+        /* ★★★ ロゴを強制的に非表示 (修正済み) ★★★ */
+        display: none !important;
+    }
+
+    /* メインコンテナの余白を調整 */
+    .main-container {
+        padding: 1px;
+        padding-top: 80px; /* 上部ロゴが消えても、上からの余白は確保 */
+        justify-content: flex-start; /* 上から詰める */
+    }
+
+    .game-logo {
+        max-width: 90%; /* タイトルロゴがはみ出ないように */
+    }
+
+    .instruction {
+        font-size: 1.7rem;
+        margin-bottom: 20px;
+        padding-top: 150px;
+    }
+
+    .button-group {
+        max-width: 90%; /* 画面幅いっぱいにボタンを表示 */
+        gap: 15px;
+    }
+
+    .btn {
+        padding: 20px 15px;
+        font-size: 1.8rem;
+        -webkit-text-stroke: 2px white; /* 文字のフチを細く */
+    }
+
+    /* スマホ画面では装飾用のキャラ画像を非表示にする */
+    .btn .character {
+        display: none;
+    }
+
+    /* 右上のヘルプボタンを少し調整 */
+    .help-link-container {
+        top: 10px;
+        right: 10px;
+    }
+
+    .help-link {
+        width: 40px;
+        height: 40px;
+        font-size: 24px;
+    }
+
+
+    /* --- 3. CPU・カテゴリ選択画面 (cpu.css の調整) --- */
+    
+    h1 {
+        font-size: 2rem;
+    }
+
+    /* (cpu.htmlに追加したインラインスタイルで代用していますが、念のため定義) */
+    .selection-box {
+        width: 90%;
+        margin: 10px auto;
+        padding: 15px;
+    }
+
+    .selection-box h2 {
+        font-size: 1.5rem;
+    }
+    
+    /* カテゴリ選択と難易度ボタン */
+    #category-select,
+    .difficulty-button {
+        width: 100%;
+        padding: 15px;
+        font-size: 1.2rem;
+    }
+
+    /* 難易度ボタンの画像を小さく */
+    .difficulty-button img {
+        width: 40px;
+        height: auto;
+        position: static !important; /* スタイルリセット */
+        margin-right: 10px;
+    }
+    
+    /* 難易度ボタンをフレックスボックスで中央揃えに */
+    .difficulty-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .difficulty-options {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+
+    /* --- 4. ゲーム画面 (game.css の調整) ★最重要★ --- */
+
+    .game-logo { 
+        /* ★★★ ゲーム画面のロゴも強制的に非表示 (修正済み) ★★★ */
+        display: none !important;
+    }
+
+    /* PCの「左: プレイヤー, 右: CPU」の固定配置レイアウトを解除し、縦積みに変更 */
+
+    /* CPUターン表示 (最上部固定) */
+    #cpu-turn-display {
+        width: 95%; /* 横幅を画面に合わせる */
+        top: 5px; /* もっと上に配置 */
+        padding: 15px 20px;
+        font-size: 1rem;
+        transform: translateX(-50%);
+    }
+
+    /* プレイヤーの結果表示 */
+    #result-display {
+        position: relative; /* position:fixed を解除 */
+        width: 95%;
+        max-width: 500px;
+        margin: 10px auto;
+        left: auto;
+        right: auto;
+        top: auto;
+        transform: none; /* 中央寄せtransformをリセット */
+        margin-top: 70px; /* 上のCPUターン表示(fixed)と重ならないようスペースを空ける */
+    }
+
+    /* CPUの結果表示 */
+    #cpu-display {
+        position: relative; /* position:fixed を解除 */
+        width: 95%;
+        max-width: 500px;
+        margin: 10px auto; /* プレイヤー表示の下に配置 */
+        left: auto;
+        right: auto;
+        top: auto;
+        transform: none;
+    }
+
+    /* 結果表示の文字サイズ調整 */
+    #result-display p:first-child,
+    #cpu-display p:first-child {
+        font-size: 1.3rem;
+    }
+    #result-display p:last-child,
+    #cpu-display p:last-child {
+        font-size: 1rem;
+    }
+
+    /* タイマーは一番下に固定 */
+    .timer {
+        top: auto;
+        bottom: 450px;
+        font-size: 1.8rem;
+    }
+
+    /* 中央の入力エリア */
+    .input-area {
+        position: relative; /* position:fixed を解除 */
+        width: 90%;
+        max-width: 500px;
+        height: auto; /* 高さを自動に */
+        min-height: 200px;
+        margin: 80px auto; /* 結果表示の下に配置 */
+        left: auto;
+        top: auto;
+        transform: none;
+        padding: 30px 10px;
+    }
+
+    .input-area p {
+        font-size: 1.3rem;
+    }
+
+    .input-area input {
+        font-size: 1.3rem;
+        width: 90%;
+    }
+
+    /* フィードバックメッセージの位置調整 */
+    #feedback-message {
+        position: relative; /* fixed解除 */
+        top: auto;
+        left: auto;
+        transform: none;
+        font-size: 1rem;
+        width: 50%;
+        margin-top: 0px; /* 入力欄の下に配置 */
+        padding: 10px;
+        /* visibility/opacityの制御は元のCSS/JSに任せる */
+    }
+    /* --- 5. 熟考中オーバーレイ (cpu.css の調整) --- */
+    
+    .thinking-container {
+        /* スマホでは幅を画面に合わせる */
+        /* ★調整ポイント：幅を変更したい場合はここ（例: 85%） */
+        width: 90%; 
+        height: 24.6%;
+        
+        /* PCではpaddingが固定値すぎたので、スマホ用に調整 */
+        /* ★調整ポイント：余白を変更したい場合はここ */
+        padding: 0px 10px;
+        margin-top: -234px;
+
+        /* * position: fixed, top: 50%, left: 50%, transform: translate(-50%, -50%) 
+         * は、PC版の指定(cpu.css)がそのまま引き継がれるため、
+         * この設定だけでスマホでも常に画面中央に表示されます。
+         */
+    }
+
+    .thinking-container p {
+        /* スマホ用に文字サイズを調整 */
+        /* ★調整ポイント：文字サイズはここ */
+        font-size: 1rem;
+        word-wrap: break-word; /* 念のため折り返し */
+    }
+    /* 全体のコンテナ */
+.result-container {
+  display: flex;
+  flex-direction: column; /* 要素を縦に並べる */
+  align-items: center; /* 中央揃え */
+  padding: 20px;
+}
+
+/* 画像の調整 */
+#result-image {
+  max-width: 100%; /* 親コンテナの幅に合わせる */
+  height: auto;    /* 高さを自動調整 */
+  margin-bottom: 250px; /* 画像とボタンの間に余白 */
+}
+
+/* ボタンコンテナの調整（スマホ） */
+.button-container {
+  display: flex;
+  flex-direction: column; /* スマホではボタンを縦に並べる */
+  width: 100%;
+  max-width: 300px; /* ボタンの最大幅を指定 */
+  
+}
+
+/* ボタン共通のスタイル */
+.button-container button {
+  padding: 12px;
+  font-size: 16px;
+  margin-top: -150px; /* ボタン間の余白 */
+  cursor: pointer;
+
+}
+#feedback-message{
+    bottom: 260px;
+}
+
+#back-to-title-button {
+  position: absolute; /* or fixed */
+  bottom: 250px;
+  left: 90px;
+}
+
+}
+/* 画面幅が600px以上（PCなど）の場合の調整 */
+@media (min-width: 600px) {
+  .button-container {
+    flex-direction: row; /* ボタンを横に並べる */
+    justify-content: center; /* 横並びで中央に配置 */
+    max-width: 600px; /* PC用の最大幅 */
+  }
+
+  .button-container button {
+    margin-top: 0; /* 縦並びの余白をリセット */
+    margin-left: 10px; /* 横並びのボタン間の余白 */
+    margin-right: 10px;
+  }
+}
+    
+
+
+/* 画面が非常に狭いデバイス（横幅400px以下）の調整 */
+@media (max-width: 400px) {
+    html {
+        font-size: 12px; /* さらにフォント基準を下げる */
+    }
+
+    /* タイトルボタンの文字が大きすぎるため調整 */
+    .btn {
+         font-size: 1.5rem;
+        -webkit-text-stroke: 1px white;
+    }
+
+    /* 入力エリアの指示テキスト */
+    .input-area p {
+        font-size: 1.1rem;
+    }
+    
+    /* 結果表示のパディングを減らす */
+    #result-display, #cpu-display {
+        padding: 15px;
+    }
+}
