@@ -54,7 +54,6 @@
 
     /* スマホ画面では装飾用のキャラ画像を非表示にする */
     .btn .character {
-       
         height: auto; /* 縦横比を維持する */
     }
 
@@ -63,14 +62,21 @@
         right: -85px;
         bottom: -20px;
     }
+
     #back-to-title-button {
-  position: absolute; /* 親要素（.button-container）を基準に配置 */
-  bottom: 60px; /* 親要素の下端から50px上 */
-  right: px; /* 親要素の右端から50px左 */
-}
+        position: absolute; /* 親要素（.button-container）を基準に配置 */
+        bottom: 60px; /* 親要素の下端から50px上 */
+        right: px; /* 親要素の右端から50px左 */
+    }
 
     /* 調整済み: Flexboxを使ってボタンを中央に配置する */
- 
+    .button-container {
+        display: flex; /* または grid */
+        justify-content: center; /* 水平方向の中央 */
+        align-items: center; /* 垂直方向の中央 */
+        height: 100vh; /* 親要素の高さを画面全体に設定 */
+    }
+
     /* 右上のヘルプボタンを少し調整 */
     .help-link-container {
         top: 10px;
@@ -106,16 +112,6 @@
         padding: 15px;
         font-size: 1.2rem;
     }
-
-    /* 調整済み: transformによる位置調整を削除 */
-     /* 調整済み: transformによる位置調整を削除 */
-  
-    .button-container {
-    display: flex; /* または grid */
-    justify-content: center; /* 水平方向の中央 */
-    align-items: center; /* 垂直方向の中央 */
-    height: 100vh; /* 親要素の高さを画面全体に設定 */
-}
 
     /* 難易度ボタンの画像を小さく */
     .difficulty-button img {
@@ -178,11 +174,12 @@
         top: auto;
         transform: none;
     }
-  #back-to-title-buttonn {
-  position: fixed; /* 画面全体を基準に位置を固定 */
-  bottom: 20px; /* 画面の下から20pxの位置 */
-  right: 20px; /* 画面の右から20pxの位置 */
-}
+
+    #back-to-title-buttonn {
+        position: fixed; /* 画面全体を基準に位置を固定 */
+        bottom: 20px; /* 画面の下から20pxの位置 */
+        right: 20px; /* 画面の右から20pxの位置 */
+    }
 
     /* 結果表示の文字サイズ調整 */
     #result-display p:first-child,
@@ -240,27 +237,24 @@
 
     /* --- 5. 熟考中オーバーレイ (cpu.css の調整) --- */
     .thinking-container {
-        /* スマホでは幅を画面に合わせる */
-        /* ★調整ポイント：幅を変更したい場合はここ（例: 85%） */
-        width: 90%;
-        height: 24.6%;
-        /* PCではpaddingが固定値すぎたので、スマホ用に調整 */
-        /* ★調整ポイント：余白を変更したい場合はここ */
-        padding: 0px 10px;
-        margin-top: -234px;
-
-        /* * position: fixed, top: 50%, left: 50%, transform: translate(-50%, -50%) 
-         * は、PC版の指定(cpu.css)がそのまま引き継がれるため、
-         * この設定だけでスマホでも常に画面中央に表示されます。
-         */
+        /* 入力エリアとサイズ・位置を合わせる */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%; 
+        min-height: 200px;
+        height: auto;
+        padding: 30px 10px;
+        
+        /* 思考中の文字サイズを調整 */
     }
-
     .thinking-container p {
-        /* スマホ用に文字サイズを調整 */
-        /* ★調整ポイント：文字サイズはここ */
-        font-size: 1rem;
-        word-wrap: break-word; /* 念のため折り返し */
+        font-size: 1.3rem; /* 入力エリアの文字サイズと揃える */
     }
+    /* 調整済み: transformによる位置調整を削除 */
+    /* 調整済み: transformによる位置調整を削除 */
+
 
     /* 全体のコンテナ */
     .result-container {

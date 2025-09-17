@@ -238,3 +238,17 @@
     visibility: visible;
     opacity: 1;
 }
+/* responsive.css */
+@media (max-width: 768px) {
+    /* 1. 「相手熟考中...」の文字サイズ調整 */
+    .thinking-container p {
+        /* スマホ用に文字サイズを調整 */
+        font-size: 1.5rem; /* 入力エリアの文字サイズに合わせる */
+    }
+
+    /* 2. 「用語を入力してください」の文字サイズ調整 */
+    .input-area p {
+        /* スマホ用に文字サイズを調整 */
+        font-size: 1.5rem; /* 思考中の文字サイズに合わせる */
+    }
+}
