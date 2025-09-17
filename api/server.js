@@ -8,7 +8,8 @@ const PORT = 3000;
 const fileNames = [
   'database.json',
   'network.json',
-  'kisorironn.json'
+  'kisorironn.json',
+  'algorithm.json'
 ];
 
 
