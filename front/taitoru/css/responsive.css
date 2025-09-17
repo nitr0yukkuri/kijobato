@@ -330,3 +330,65 @@
         padding: 15px;
     }
 }
+/* responsive.css */
+/* responsive.cssの末尾に追加 */
+
+/* ---------------------------------- */
+/* 中央の入力エリアと熟考中画面の統一 */
+/* ---------------------------------- */
+
+@media (max-width: 768px) {
+    /* 中央の入力エリアと熟考中画面を統一 */
+    .input-area,
+    .thinking-container {
+        /* 中央に固定するスタイルに統一 */
+        position: fixed;
+        top: 62%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        /* サイズとパディングを統一 */
+        width: 90%;
+        max-width: 500px;
+        height: auto;
+        min-height: 200px;
+        padding: 30px 10px;
+        margin: 0;
+    }
+
+    /* 両方のpタグの文字サイズを統一 */
+    .input-area p,
+    .thinking-container p {
+        font-size: 1.3rem;
+    }
+ #feedback-message {
+    position: fixed;
+    top: 436px;
+
+    
+    /* 1. 要素の「左端」を画面の真ん中に移動 */
+    left: 49%;
+    
+    /* 2. 要素自身の幅の「半分」だけ左に戻す */
+    transform: translateX(-50%);
+
+    /* --- 以下は見た目のスタイル (変更なし) --- */
+    white-space: nowrap;
+    font-size: 1em;
+    color: yellow;
+    font-weight: bold;
+    padding: 15px 25px;
+    border-radius: 6px;
+    text-align: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s;
+    /* `margin: 15px auto;` は不要なので削除してもOKです */
+}
+
+/* 文字が入った時だけ表示 (変更なし) */
+#feedback-message:not(:empty) {
+    visibility: visible;
+    opacity: 1;
+}
+}
