@@ -61,6 +61,10 @@ h1 {
     font-weight: bold;
     border-radius: 8px;
     border: 1px solid #ccc;
+   
+    border: 3px solid white;
+    
+
     background-color: #f0f0f0;
     color: #333;
     cursor: pointer;
@@ -69,6 +73,8 @@ h1 {
 
 #back-to-title-button:hover {
     background-color: #ddd;
+   
+    
 }
 
 .text-hard {
