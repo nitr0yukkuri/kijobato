@@ -195,7 +195,7 @@
     /* タイマーは一番下に固定 */
     .timer {
         top: auto;
-        bottom: 450px;
+        bottom: 45px;
         font-size: 1.8rem;
     }
 
