@@ -6,46 +6,42 @@
     max-width: 300px;
     z-index: 100;
 }
-
-/* 結果表示用のコンテナ */
+/* 結果表示用のコンテナ (中央揃えの基準) */
 .result-container {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.7);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
-#result-image {
-    max-width: 60%;
-    height: auto;
-    margin-bottom: 40px;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
+/* (中略) ... #result-image などのスタイル ... */
 
-/* ボタンを横に並べるためのコンテナ */
+/* ボタンを横に並べるためのコンテナ (★修正版) */
 .button-container {
-    display: flex;
-    /* ★★★★★ この数値を大きくして、ボタンの間隔を広げました ★★★★★ */
-    gap: 1px; /* ← 20pxから40pxに変更 */
-    position: relative;
-    bottom: 130px;
-}
-#retry-button {
-  /* 幅を100%に */
-  width: 140%;
-  height: 100%;
- 
-  box-sizing: border-box; /* paddingとborderを幅に含める */
-
-  /* ↓ テキストを改行させない */
+  display: flex;
+  flex-direction: row; /* 横並び */
+ position: relative;
+  bottom: 90px;
   
+  /* ★★★ ボタン間の隙間は gap だけで指定します ★★★ */
+  gap: 180px; /* 例として20pxに設定 */
+  
+  /* 'position' や 'bottom'、'margin-top' は削除し、
+     親(.result-container)の中央揃えに任せます */
+     
+}
 
-  /* ↓ エラーを修正 (以前の値に戻しました) */
-  padding: 10px 50px; 
+#retry-button {
+  /* width, height を削除 (paddingでサイズを決定) */
+  box-sizing: border-box;
+  
+  /* ↓ テキストを改行させない */
+  white-space: nowrap; 
+
+  /* ↓ 2つのボタンで値を統一 */
+  padding: 15px 50px; 
   font-size: 1.4rem;  
 
   font-weight: bold;
@@ -59,17 +55,13 @@
   transition: opacity 0.8s ease-out 0.3s, transform 0.8s ease-out 0.3s, background-color 0.2s;
 }
 
-/* 「使った単語一覧」ボタンのスタイル */
+/* 「使った単語一覧」ボタンのスタイル (★修正版) */
 #word-list-button {
-  /* 幅を100%に */
-  width: 140%;
-  /*height: 70%; */
-  box-sizing: border-box; /* paddingとborderを幅に含める */
-
-  /* ↓ テキストを改行させない */
+  /* width, height を削除 (paddingでサイズを決定) */
+  box-sizing: border-box;
   white-space: nowrap;
 
-  /* ↓ retry-buttonと値を揃える */
+  /* ↓ 2つのボタンで値を統一 */
   padding: 15px 50px;
   font-size: 1.4rem; 
 
@@ -82,8 +74,13 @@
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease-out 0.5s, transform 0.8s ease-out 0.5s, background-color 0.2s;
+  
+  /* ↓ gapと重複するため削除 */
+  /* margin-left: 30px; */
+  
 }
 
+/* ホバースタイル (重複を削除) */
 #retry-button:hover {
   background-color: #4db8ff;
   transform: translateY(0) scale(1.05);
@@ -93,20 +90,30 @@
   background-color: #ddd;
   transform: translateY(0) scale(1.05);
 }
-#retry-button:hover {
-    background-color: #4db8ff;
-    transform: translateY(0) scale(1.05);
-}
 
-#word-list-button:hover {
-    background-color: #ddd;
-    transform: translateY(0) scale(1.05);
-}
-
-/* 表示時に付けるクラス */
+/* 表示時に付けるクラス (変更なし) */
 .result-container.show #result-image,
 .result-container.show #retry-button,
 .result-container.show #word-list-button {
-    opacity: 1;
-    transform: translateY(0);
+  opacity: 1;
+  transform: translateY(0);
 }
+/* (中略) ... */
+
+/* 画像のスタイル (例) */
+#result-image {
+  /* 例1: 横幅を固定値 (例: 300px) にする (高さは自動調整) */
+  max-width: 60%;
+  height: auto; 
+
+  /* 例2: 親要素に対しての最大幅 (例: 80%) を決める */
+  /* max-width: 80%; */
+  /* height: auto; */
+
+  /* (元々設定されているかもしれない他のスタイル...) */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* ボタンを横に並べるためのコンテナ ... (以下略) */
