@@ -172,7 +172,10 @@
         top: 200px;
     
 
-        max-width: 10%; /* タイトルロゴがはみ出ないように */
+        max-width: 90%; /* タイトルロゴがはみ出ないように */
+    }
+    .instruction{
+        margin-top: 100px;
     }
        
     
