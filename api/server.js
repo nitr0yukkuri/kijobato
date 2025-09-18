@@ -1,25 +1,25 @@
 const express = require('express');
 const cors = require('cors');
-const http = require('http'); // HTTPサーバーをインポート
-const { Server } = require("socket.io"); // Socket.ioをインポート
+const http = require('http');
+const { Server } = require("socket.io");
 
 const app = express();
-const server = http.createServer(app); // HTTPサーバーを作成
-const io = new Server(server, {
+const server = http.createServer(app);
+const io = new new Server(server, {
   cors: {
-    origin: "*", // すべてのオリジンからの接続を許可
+    origin: "*", 
     methods: ["GET", "POST"]
   }
 });
 const PORT = process.env.PORT || 3000;
 
+// JSONファイルの読み込み
 const fileNames = [
   'database.json',
   'network.json',
   'kisorironn.json',
   'algorithm.json'
 ];
-
 const wordsData = fileNames
   .map(fileName => require(`./${fileName}`))
   .flat();
@@ -28,17 +28,16 @@ console.log(`合計 ${wordsData.length} 個の単語を読み込みました。`
 
 app.use(cors());
 app.use(express.json());
+// ★★★ フロントエンドのファイルを提供するための設定を追加 ★★★
+app.use(express.static('front'));
 
-// ★★★ ここからがSocket.ioを使った対戦ロジックです ★★★
-let rooms = {}; // 部屋の状態を管理するオブジェクト
+let rooms = {};
 
 io.on('connection', (socket) => {
     console.log('新しいプレイヤーが接続しました:', socket.id);
 
-    // プレイヤーが部屋を作成または参加する
     socket.on('joinRoom', ({ roomId, playerName }) => {
         if (!rooms[roomId]) {
-            // 部屋が存在しない場合は作成
             rooms[roomId] = {
                 players: {},
                 usedWords: [],
@@ -49,24 +48,23 @@ io.on('connection', (socket) => {
 
         const room = rooms[roomId];
         if (Object.keys(room.players).length < 2) {
-            // プレイヤーを部屋に追加
             room.players[socket.id] = { name: playerName, id: socket.id };
             socket.join(roomId);
             console.log(`${playerName}が部屋 '${roomId}' に参加しました。`);
             
-            // 部屋の全員に通知
             io.to(roomId).emit('playerJoined', {
                 players: Object.values(room.players),
                 message: `${playerName}がゲームに参加しました。`
             });
 
-            // 2人揃ったらゲーム開始
             if (Object.keys(room.players).length === 2) {
                 const playerIds = Object.keys(room.players);
-                room.currentPlayer = playerIds[0]; // 最初のプレイヤーを決定
+                room.currentPlayer = playerIds[0];
 
+                // ★修正点: 最初のプレイヤーIDを送信
                 io.to(roomId).emit('gameStart', {
-                    message: `ゲーム開始！${room.players[room.currentPlayer].name}のターンです。`
+                    message: `ゲーム開始！${room.players[room.currentPlayer].name}のターンです。`,
+                    starterId: room.currentPlayer
                 });
             }
         } else {
@@ -74,7 +72,6 @@ io.on('connection', (socket) => {
         }
     });
 
-    // プレイヤーが単語を入力した
     socket.on('submitWord', ({ roomId, word }) => {
         const room = rooms[roomId];
         if (!room || room.currentPlayer !== socket.id) {
@@ -99,23 +96,22 @@ io.on('connection', (socket) => {
         
         room.usedWords.push(foundWord.word);
 
-        // 次のプレイヤーにターンを渡す
         const playerIds = Object.keys(room.players);
         const nextPlayerIndex = (playerIds.indexOf(socket.id) + 1) % playerIds.length;
         room.currentPlayer = playerIds[nextPlayerIndex];
 
-        // 部屋の全員に単語と次のプレイヤーを通知
+        // ★修正点: 次のプレイヤーIDも送信
         io.to(roomId).emit('wordSubmitted', {
             player: room.players[socket.id],
             word: foundWord.word,
             description: foundWord.description,
-            nextPlayer: room.players[room.currentPlayer].name
+            nextPlayer: room.players[room.currentPlayer].name,
+            nextPlayerId: room.currentPlayer
         });
     });
 
     socket.on('disconnect', () => {
         console.log('プレイヤーが切断しました:', socket.id);
-        // 切断したプレイヤーがいた部屋を特定し、相手に通知
         for (const roomId in rooms) {
             if (rooms[roomId].players[socket.id]) {
                 const disconnectedPlayer = rooms[roomId].players[socket.id];
@@ -125,7 +121,6 @@ io.on('connection', (socket) => {
                     message: `${disconnectedPlayer.name}が切断しました。`
                 });
                 
-                // 部屋が空になったら削除
                 if (Object.keys(rooms[roomId].players).length === 0) {
                     delete rooms[roomId];
                     console.log(`部屋 '${roomId}' が空になったため削除されました。`);

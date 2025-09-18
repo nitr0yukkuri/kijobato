@@ -1,11 +1,12 @@
 {
-  "version": 2,
-  "builds": [
-    { "src": "api/server.js", "use": "@vercel/node" },
-    { "src": "front/taitoru/**", "use": "@vercel/static" }
-  ],
-  "routes": [
-    { "src": "/api/(.*)", "dest": "api/server.js" },
-    { "src": "/(.*)", "dest": "/front/taitoru/$1" }
+  "rewrites": [
+    {
+      "source": "/socket.io/(.*)",
+      "destination": "/socket.io/"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/api/server"
+    }
   ]
 }
