@@ -274,6 +274,21 @@
     margin-bottom: 20px;
     padding-top: 0; /* ★★★ この行を 0 に修正 ★★★ */
 }
+
+
+}
+@media (max-width: 768px) {
+    
+.game-logo {
+      
+       
+        display: none !important;
+    
+
+        max-width: 90%; /* タイトルロゴがはみ出ないように */
+    }
+       
+    
 }
     
     

@@ -164,3 +164,16 @@
     color: black;
     transform: scale(1.1); /* 少し大きくする */
 }
+@media (max-width: 728px) {
+    
+.game-logo {
+      
+       
+        top: 200px;
+    
+
+        max-width: 10%; /* タイトルロゴがはみ出ないように */
+    }
+       
+    
+}

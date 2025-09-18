@@ -117,3 +117,16 @@
 }
 
 /* ボタンを横に並べるためのコンテナ ... (以下略) */
+@media (max-width: 768px) {
+    
+.game-logo {
+      
+       
+        display: none !important;
+    
+
+        max-width: 90%; /* タイトルロゴがはみ出ないように */
+    }
+       
+    
+}

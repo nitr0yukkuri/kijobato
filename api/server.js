@@ -24,7 +24,7 @@ app.use(cors());
 app.use(express.json());
 
 const difficultySettings = {
-  easy: { successRate: 0.7 },
+  easy: { successRate: 0.01 },
   medium: { successRate: 0.9 },
   hard: { successRate: 1.0 },
 };

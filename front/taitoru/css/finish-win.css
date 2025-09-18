@@ -93,3 +93,16 @@
   opacity: 1;
   transform: translateY(0);
 }
+@media (max-width: 768px) {
+    
+.game-logo {
+      
+       
+        display: none !important;
+    
+
+        max-width: 90%; /* タイトルロゴがはみ出ないように */
+    }
+       
+    
+}

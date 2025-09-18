@@ -31,6 +31,11 @@
     }
 
     .game-logo {
+      
+       
+      
+    
+
         max-width: 90%; /* タイトルロゴがはみ出ないように */
     }
 
@@ -291,7 +296,28 @@
     }
 
     #feedback-message {
-        bottom: 260px;
+        bottom: 200px;
+    }
+    /* --- 6. CPU時間切れオーバーレイの調整 --- */
+    .cpu-stuck-container {
+        /* ★調整ポイント: 幅 */
+        width: 100%;
+        position: absolute; /* または relative, fixed, sticky */
+         top: 500px; 
+        max-width: 400px;
+        box-sizing: border-box; /* paddingを幅に含める */
+
+        /* ★調整ポイント: 余白 */
+        padding: 30px 20px;
+    }
+    .cpu-stuck-container p {
+        /* ★調整ポイント: 文字サイズ */
+        font-size: 1.5rem;
+    }
+    #cpu-stuck-button {
+        /* ★調整ポイント: ボタンのサイズ */
+        padding: 12px 40px;
+        font-size: 1.2rem;
     }
 }
 
