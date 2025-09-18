@@ -5,9 +5,9 @@ const { Server } = require("socket.io");
 
 const app = express();
 const server = http.createServer(app);
-const io = new new Server(server, {
+const io = new Server(server, {
   cors: {
-    origin: "*", 
+    origin: "*",
     methods: ["GET", "POST"]
   }
 });
@@ -27,9 +27,9 @@ const wordsData = fileNames
 console.log(`合計 ${wordsData.length} 個の単語を読み込みました。`);
 
 app.use(cors());
-app.use(express.json());
 // ★★★ フロントエンドのファイルを提供するための設定を追加 ★★★
 app.use(express.static('front'));
+app.use(express.json());
 
 let rooms = {};
 

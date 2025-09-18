@@ -40,7 +40,7 @@ window.onload = () => {
         console.log(data.message);
         feedbackElement.textContent = data.message;
         
-        // ★修正点: 自分が最初のプレイヤーの場合に入力を有効にする
+        // ★修正点: 自分のIDと最初のプレイヤーIDを比較
         if (data.starterId === socket.id) {
             inputElement.disabled = false;
             inputElement.focus();
@@ -58,7 +58,7 @@ window.onload = () => {
         cpuAnswerDisplay.textContent = data.description;
         cpuDisplay.classList.remove('hidden');
         
-        // ★修正点: 自分のターンになったら入力を有効に
+        // ★修正点: 自分のIDと次のプレイヤーIDを比較
         if (data.nextPlayerId === socket.id) {
             inputElement.disabled = false;
             inputElement.focus();
