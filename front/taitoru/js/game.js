@@ -1,14 +1,14 @@
 window.onload = () => {
     let timeLeft = 30;
     const difficulty = localStorage.getItem('gameDifficulty') || 'medium';
-    console.log('選択された難易度:', difficulty);
-
-    let lastValidWord = '';
-    let lastValidDescription = '';
+    let roomId = 'room1'; // 仮の部屋ID
 
     const API_BASE_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
         ? 'http://localhost:3000'
         : '';
+    
+    // Socket.ioを読み込み、サーバーに接続
+    const socket = io(API_BASE_URL);
 
     const timerElement = document.querySelector('.timer');
     const inputElement = document.querySelector('.input-area input');
@@ -22,112 +22,117 @@ window.onload = () => {
     const cpuTurnDisplay = document.getElementById('cpu-turn-display');
     const thinkingOverlay = document.getElementById('thinking-overlay');
 
-    function updateCpuDisplay(wordData) {
-        cpuWordDisplay.textContent = wordData.word;
-        cpuAnswerDisplay.textContent = wordData.description;
-        cpuDisplay.classList.remove('hidden');
-        if (wordData.word) {
-            cpuTurnDisplay.textContent = `対戦相手が「${wordData.word}」という単語を入力しました`;
-            cpuTurnDisplay.classList.remove('hidden');
-        } else {
-            cpuTurnDisplay.classList.add('hidden');
+    // 接続時にサーバーに部屋への参加を通知
+    socket.on('connect', () => {
+        // プレイヤー名をユーザーに尋ねる
+        const playerName = prompt("あなたの名前を入力してください:");
+        if (playerName) {
+            socket.emit('joinRoom', { roomId, playerName });
         }
-    }
+    });
+    
+    // 部屋に参加したときのサーバーからの通知
+    socket.on('playerJoined', (data) => {
+        console.log(data.message);
+        if (data.players.length === 2) {
+            thinkingOverlay.classList.remove('hidden');
+            setTimeout(() => {
+                thinkingOverlay.classList.add('hidden');
+                feedbackElement.textContent = '対戦相手が見つかりました！';
+            }, 2000);
+        } else {
+            feedbackElement.textContent = '対戦相手を待っています...';
+        }
+    });
+    
+    // ゲームが開始したときのサーバーからの通知
+    socket.on('gameStart', (data) => {
+        console.log(data.message);
+        feedbackElement.textContent = data.message;
+        
+        // 最初のターンは入力可能にする
+        inputElement.disabled = false;
+        inputElement.focus();
+        
+        // 最初のタイマーを開始
+        startTimer();
+    });
+    
+    // ターンが回ってきたときのサーバーからの通知
+    socket.on('wordSubmitted', (data) => {
+        console.log('相手が単語を入力:', data);
+        
+        // 相手の単語を表示
+        cpuTurnDisplay.textContent = `対戦相手が「${data.word}」という単語を入力しました`;
+        cpuTurnDisplay.classList.remove('hidden');
+        
+        cpuWordDisplay.textContent = data.word;
+        cpuAnswerDisplay.textContent = data.description;
+        cpuDisplay.classList.remove('hidden');
+        
+        // 自分のターンになったら入力を有効に
+        if (data.nextPlayer === socket.id) {
+            inputElement.disabled = false;
+            inputElement.focus();
+            feedbackElement.textContent = `あなたのターンです。`;
+            resetTimer();
+        } else {
+            inputElement.disabled = true;
+            feedbackElement.textContent = `相手のターンです。`;
+        }
+    });
 
-    fetch(`${API_BASE_URL}/api/start`)
-      .then(response => response.json())
-      .then(updateCpuDisplay)
-      .catch(error => {
-          console.error('サーバー接続エラー:', error);
-          alert('サーバーに接続できません。バックエンドが起動しているか確認してください。');
-      });
+    // プレイヤーが切断したときの通知
+    socket.on('playerDisconnected', (data) => {
+        alert(data.message + ' ゲームを終了します。');
+        window.location.href = 'index.html'; // トップページに戻る
+    });
+
+    // 無効な単語を入力したときの通知
+    socket.on('invalidWord', (data) => {
+        feedbackElement.textContent = data.message;
+    });
+
+    // サーバーエラーの通知
+    socket.on('error', (message) => {
+        alert('エラーが発生しました: ' + message);
+    });
 
     inputElement.addEventListener('keydown', (event) => {
         if (event.key !== 'Enter') return;
         const playerInputWord = inputElement.value;
-        feedbackElement.textContent = '';
+        inputElement.value = '';
         
         if (!playerInputWord) {
             feedbackElement.textContent = 'まだ何も入力していません！';
             return; 
         }
+
+        // サーバーに単語を送信
+        socket.emit('submitWord', { roomId, word: playerInputWord });
         
-        inputElement.value = '';
-
-        fetch(`${API_BASE_URL}/api/turn`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ word: playerInputWord, difficulty: difficulty }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('サーバーからの返答:', data);
-            
-            if (data.isValid === false) {
-                feedbackElement.textContent = data.message;
-                return;
-            }
-            
-            playerResultDisplay.classList.remove('hidden');
-            userInputDisplay.textContent = playerInputWord;
-            answerDisplay.textContent = data.playerWordDescription;
-
-            lastValidWord = playerInputWord;
-            lastValidDescription = data.playerWordDescription;
-            
-            timeLeft = 5;
-            timerElement.textContent = `残り${timeLeft}秒`;
-            
-            thinkingOverlay.classList.remove('hidden');
-            
-            // ★★★ 変更点1: CPU思考中は入力欄を無効にする ★★★
-            inputElement.disabled = true;
-
-            const delay = data.cpuTimedOut ? 5000 : data.cpuDelay;
-
-            setTimeout(() => {
-                thinkingOverlay.classList.add('hidden');
-
-                if (data.cpuTimedOut) {
-                    clearInterval(countdown); 
-                    const cpuStuckOverlay = document.getElementById('cpu-stuck-overlay');
-                    const cpuStuckButton = document.getElementById('cpu-stuck-button');
-                    if (cpuStuckOverlay && cpuStuckButton) {
-                        cpuStuckOverlay.classList.remove('hidden');
-                        cpuStuckButton.addEventListener('click', () => {
-                            window.location.href = 'finish-win.html';
-                        });
-                    }
-                } else if (data.gameOver) {
-                    alert(data.message);
-                    window.location.href = 'finish-win.html';
-                } else {
-                    updateCpuDisplay(data);
-                    
-                    timeLeft = 30;
-                    timerElement.textContent = `残り${timeLeft}秒`;
-                    
-                    // ★★★ 変更点2: プレイヤーのターンになったら入力欄を有効に戻す ★★★
-                    inputElement.disabled = false;
-                    
-                    // ★★★ 変更点3: すぐ入力できるようにフォーカスを当てる ★★★
-                    inputElement.focus();
-                }
-            }, delay);
-        })
-        .catch(error => {
-            console.error('通信エラー:', error);
-            alert('サーバーとの通信中にエラーが発生しました。');
-        });
+        // 自分のターンが終了したことを示すUI
+        inputElement.disabled = true;
+        feedbackElement.textContent = '相手のターンです...';
     });
 
-    const countdown = setInterval(() => {
-        if (timeLeft <= 0) {
-            clearInterval(countdown);
-            window.location.href = 'finish-lose.html';
-        } else {
-            timeLeft--;
-            timerElement.textContent = `残り${timeLeft}秒`;
-        }
-    }, 1000);
+    let countdown;
+    function startTimer() {
+        clearInterval(countdown);
+        countdown = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                window.location.href = 'finish-lose.html';
+            } else {
+                timeLeft--;
+                timerElement.textContent = `残り${timeLeft}秒`;
+            }
+        }, 1000);
+    }
+    
+    function resetTimer() {
+        timeLeft = 30;
+        timerElement.textContent = `残り${timeLeft}秒`;
+        startTimer();
+    }
 };
