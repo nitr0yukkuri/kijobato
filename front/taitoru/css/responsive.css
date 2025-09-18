@@ -238,7 +238,7 @@
         transform: none;
         font-size: 1rem;
         width: 50%;
-        margin-top:-30px; /* 入力欄の下に配置 */
+        margin-top:-100px; /* 入力欄の下に配置 */
         padding: 10px;
         /* visibility/opacityの制御は元のCSS/JSに任せる */
     }
