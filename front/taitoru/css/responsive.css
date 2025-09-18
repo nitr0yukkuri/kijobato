@@ -14,7 +14,6 @@
 
     body {
         /* スマホでは縦スクロールを許可する (横スクロールは禁止) */
-       
         overflow-x: hidden;
     }
 
@@ -135,10 +134,13 @@
     }
 
     /* --- 4. ゲーム画面 (game.css の調整) ★最重要★ --- */
-    .game-logo {
-        /* ★★★ ゲーム画面のロゴも強制的に非表示 (修正済み) ★★★ */
-        display: none !important;
-    }
+   .game-logo {
+    max-width: 100%; /* タイトルロゴがはみ出ないように */
+  position: absolute;
+  top: 150px;
+  right: -3px;
+}
+
 
     /* PCの「左: プレイヤー, 右: CPU」の固定配置レイアウトを解除し、縦積みに変更 */
     /* CPUターン表示 (最上部固定) */
@@ -329,6 +331,7 @@
     #result-display, #cpu-display {
         padding: 15px;
     }
+    
 }
 /* responsive.css */
 /* responsive.cssの末尾に追加 */

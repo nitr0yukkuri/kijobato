@@ -261,6 +261,19 @@
     .input-area p {
         font-size: 1.3rem;
     }
+    /* 変更前 (この padding-top がロゴを画面外に押し出しています) */
+.instruction {
+    font-size: 1.7rem;
+    margin-bottom: 20px;
+    padding-top: 150px; 
+}
+
+/* 変更後 (↓ padding-top を削除します) */
+.instruction {
+    font-size: 1.7rem;
+    margin-bottom: 20px;
+    padding-top: 0; /* ★★★ この行を 0 に修正 ★★★ */
+}
 }
     
     
