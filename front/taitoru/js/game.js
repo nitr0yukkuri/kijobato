@@ -1,15 +1,38 @@
 window.onload = () => {
+    // ユーザーIDを取得または新規作成
+    let userId = localStorage.getItem('kijobatoUserId');
+    if (!userId) {
+        userId = 'user_' + Date.now() + Math.random().toString(36).substr(2, 9);
+        localStorage.setItem('kijobatoUserId', userId);
+    }
+    
+    // 実績解除関数
+    const unlockAchievement = (achId) => {
+        fetch('/api/unlock_achievement', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId: userId, achievementId: achId })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.achievement) {
+                // 実績解除時に通知
+                alert(`実績解除！\n${data.achievement.name}\n${data.achievement.description}`);
+            }
+        }).catch(err => console.error('Achievement unlock failed:', err));
+    };
+
+    // 「はじめの一歩」実績 (ID: 1) を解除
+    unlockAchievement(1);
+
+    // --- ここから元のgame.jsのコード ---
     let timeLeft = 30;
     const difficulty = localStorage.getItem('gameDifficulty') || 'medium';
     console.log('選択された難易度:', difficulty);
 
     let lastValidWord = '';
     let lastValidDescription = '';
-
-    const API_BASE_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-        ? 'http://localhost:3000'
-        : '';
-
+    
     const timerElement = document.querySelector('.timer');
     const inputElement = document.querySelector('.input-area input');
     const feedbackElement = document.getElementById('feedback-message');
@@ -34,13 +57,19 @@ window.onload = () => {
         }
     }
 
-    fetch(`${API_BASE_URL}/api/start`)
-      .then(response => response.json())
-      .then(updateCpuDisplay)
-      .catch(error => {
-          console.error('サーバー接続エラー:', error);
-          alert('サーバーに接続できません。バックエンドが起動しているか確認してください。');
-      });
+    // APIから単語リストを読み込む
+    fetch(`/api/words?category=${difficulty}`)
+        .then(response => {
+            if (!response.ok) throw new Error('単語リストの読み込みに失敗しました');
+            return response.json();
+        })
+        .then(() => {
+            console.log("単語リスト取得成功");
+        })
+        .catch(error => {
+            console.error('サーバー接続エラー:', error);
+            alert('サーバーに接続できません。バックエンドが起動しているか確認してください。');
+        });
 
     inputElement.addEventListener('keydown', (event) => {
         if (event.key !== 'Enter') return;
@@ -54,7 +83,7 @@ window.onload = () => {
         
         inputElement.value = '';
 
-        fetch(`${API_BASE_URL}/api/turn`, {
+        fetch(`/api/turn`, { // 相対パスに変更
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ word: playerInputWord, difficulty: difficulty }),
@@ -80,7 +109,6 @@ window.onload = () => {
             
             thinkingOverlay.classList.remove('hidden');
             
-            // ★★★ 変更点1: CPU思考中は入力欄を無効にする ★★★
             inputElement.disabled = true;
 
             const delay = data.cpuTimedOut ? 5000 : data.cpuDelay;
@@ -107,10 +135,7 @@ window.onload = () => {
                     timeLeft = 30;
                     timerElement.textContent = `残り${timeLeft}秒`;
                     
-                    // ★★★ 変更点2: プレイヤーのターンになったら入力欄を有効に戻す ★★★
                     inputElement.disabled = false;
-                    
-                    // ★★★ 変更点3: すぐ入力できるようにフォーカスを当てる ★★★
                     inputElement.focus();
                 }
             }, delay);

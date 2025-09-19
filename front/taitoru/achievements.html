@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>実績一覧</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/achievements.css">
+</head>
+<body>
+    <div class="container">
+        <h1>実績一覧</h1>
+        <div id="achievement-list" class="achievement-container">
+            </div>
+        <a href="/" class="back-button">戻る</a>
+    </div>
+
+    <script>
+        // ユーザーIDをlocalStorageから取得（なければ新規作成）
+        let userId = localStorage.getItem('kijobatoUserId');
+        if (!userId) {
+            userId = 'user_' + Date.now() + Math.random().toString(36).substr(2, 9);
+            localStorage.setItem('kijobatoUserId', userId);
+        }
+
+        // APIを叩いて実績一覧を取得
+        fetch(`/api/achievements/${userId}`)
+            .then(response => response.json())
+            .then(achievements => {
+                const listElement = document.getElementById('achievement-list');
+                if (achievements.length === 0) {
+                    listElement.innerHTML = '<p>まだ解除した実績はありません。</p>';
+                    return;
+                }
+
+                achievements.forEach(ach => {
+                    const achElement = document.createElement('div');
+                    achElement.classList.add('achievement-item');
+                    achElement.innerHTML = `
+                        <img src="${ach.image}" alt="${ach.name}">
+                        <div class="achievement-details">
+                            <h3>${ach.name}</h3>
+                            <p>${ach.description}</p>
+                        </div>
+                    `;
+                    listElement.appendChild(achElement);
+                });
+            });
+    </script>
+</body>
+</html>

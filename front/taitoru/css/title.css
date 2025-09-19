@@ -180,3 +180,62 @@
        
     
 }
+/* 既存のtitle.cssの内容はそのままにして、以下のコードを末尾に追加してください */
+
+/* 実績ボタン用のコンテナ（画面右下に配置） */
+
+/* 既存のtitle.cssの内容はそのままにして、以下のコードを末尾に追加してください */
+/* 既存のtitle.cssの内容はそのままにして、以下の実績ボタン関連のコードを末尾に追加・上書きしてください */
+
+/* 実績ボタン用のコンテナ（右下に配置） */
+.achievements-container {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 100;
+}
+
+/* ★★★★★★★★★★★★★★★★★★★★★★★★★★★★ */
+/* ★★★ ここが今回の変更点です ★★★ */
+/* ★★★★★★★★★★★★★★★★★★★★★★★★★★★★ */
+/* 初期状態の丸い⚙ボタンのスタイルをご指定のヘルプボタン風に修正 */
+#achievements-btn.btn-round {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.3); /* 少し透明な白 */
+    color: white;
+    border: 2px solid white;
+    border-radius: 50%; /* 正円にする */
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    position: fixed;
+    top: 2.5%;
+    left: 86%;
+}
+
+/* 展開後のポップアップ風ボタンのスタイル（変更なし） */
+#achievements-btn.expanded {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 2px solid white;
+    color: white;
+    width: 250px;
+    height: 80px;
+    border-radius: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+#achievements-btn:hover {
+    opacity: 0.9;
+}

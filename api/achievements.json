@@ -1,0 +1,28 @@
+{
+  "achievements": [
+    {
+      "id": 1,
+      "name": "はじめの一歩",
+      "description": "初めてゲームをプレイした",
+      "image": "/png/achievement_play_first.png"
+    },
+    {
+      "id": 2,
+      "name": "初勝利！",
+      "description": "初めてCPUに勝利した",
+      "image": "/png/achievement_first_win.png"
+    },
+    {
+      "id": 3,
+      "name": "常連さん",
+      "description": "CPU対戦で3回勝利した",
+      "image": "/png/achievement_3wins.png"
+    },
+    {
+      "id": 4,
+      "name": "もう負けない",
+      "description": "CPU対戦で5回勝利した",
+      "image": "/png/achievement_5wins.png"
+    }
+  ]
+}

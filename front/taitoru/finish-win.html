@@ -6,8 +6,7 @@
     <title>きじょバト - 結果画面</title>
     <link rel="stylesheet" href="./css/common.css">
     <link rel="stylesheet" href="./css/finish-win.css">
-     <link rel="stylesheet" href="./css/responsive.css">
-    
+    <link rel="stylesheet" href="./css/responsive.css">
 </head>
 <body>
     <div class="background-container"></div>
@@ -15,12 +14,20 @@
 
     <div class="result-container">
         <img id="result-image" src="./png/shouri.png" alt="勝利">
+     
+
+        <div id="achievement-notification" class="achievement-container"></div>
         
         <div class="button-container">
-            <button id="retry-button">もう一度プレイ</button>
-            <button id="word-list-button">使った単語一覧</button>
+            <button id="retry-button" class="btn btn-blue">もう一度プレイ</button>
+            <button id="word-list-button" class="btn btn-green">使った単語一覧</button>
         </div>
+        
+        <div id="word-list-container" class="word-list-container" style="display: none;">
+           
+            <ul id="word-list"></ul>
         </div>
+    </div>
 
     <script src="./js/finish-win.js"></script>
 </body>
