@@ -1,11 +1,11 @@
 {
   "version": 2,
   "builds": [
-    { "src": "api/**/*.js", "use": "@vercel/node" },
+    { "src": "api/server.js", "use": "@vercel/node" },
     { "src": "front/taitoru/**", "use": "@vercel/static" }
   ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1.js" },
+    { "src": "/api/(.*)", "dest": "api/server.js" },
     { "src": "/(.*)", "dest": "/front/taitoru/$1" }
   ]
 }
