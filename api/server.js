@@ -51,13 +51,13 @@ function loadAllWords() {
 
                 if (words.length > 0) {
                     tempWords.push(...words);
-                    logInfo(`  成功: ${words.length} 個の単語を追加しました。`);
+                    logInfo(`  成功: ${words.length} 個の単語を追加しました。`);
                 }
             } catch (e) {
-                logError(`  エラー: ${filePath} の読み込みまたは解析に失敗しました。`, e);
+                logError(`  エラー: ${filePath} の読み込みまたは解析に失敗しました。`, e);
             }
         } else {
-            logError(`  エラー: ファイルが見つかりません: ${filePath}`);
+            logError(`  エラー: ファイルが見つかりません: ${filePath}`);
         }
     }
     
@@ -81,6 +81,10 @@ function normalizeWord(str) {
 }
 
 // --- APIエンドポイント ---
+app.get('/api/achievements', (req, res) => {
+    res.json(achievementsData);
+});
+
 app.get('/api/words', (req, res) => {
     wordHistory = []; // ゲーム開始時に履歴をリセット
     if (allWords.length > 0) {
@@ -89,6 +93,18 @@ app.get('/api/words', (req, res) => {
         res.status(500).send(`サーバーエラー: 単語リストが空です。サーバーのログを確認してください。`);
     }
 });
+
+// ★★★ ここからが変更点 ★★★
+// 使用された単語の履歴を、意味とセットで返すAPIエンドポイント
+app.get('/api/word_history', (req, res) => {
+    const detailedHistory = wordHistory.map(historyWord => {
+        const foundWord = allWords.find(w => normalizeWord(w.word) === historyWord);
+        return foundWord ? { word: foundWord.word, description: foundWord.description } : null;
+    }).filter(item => item !== null);
+
+    res.json(detailedHistory);
+});
+// ★★★ ここまでが変更点 ★★★
 
 // プレイヤーのターン処理
 app.post('/api/turn', (req, res) => {
@@ -135,7 +151,6 @@ app.post('/api/turn', (req, res) => {
 
     if (!cpuShouldReply) {
         logInfo(`CPUが難易度ルールに基づき返信しませんでした。プレイヤーの勝利です。`);
-        // ★★★ 変更点1: プレイヤーの単語の解説を返すように修正 ★★★
         return res.json({ 
             isValid: true, 
             playerWordDescription: foundWord.description, 
@@ -147,7 +162,6 @@ app.post('/api/turn', (req, res) => {
 
     if (possibleCpuWords.length === 0) {
         logInfo(`CPUが返せる単語がありません。プレイヤーの勝利です。`);
-        // ★★★ 変更点2: プレイヤーの単語の解説を返すように修正 ★★★
         return res.json({ 
             isValid: true, 
             playerWordDescription: foundWord.description, 
@@ -185,4 +199,3 @@ app.listen(PORT, () => {
 });
 
 module.exports = app;
-

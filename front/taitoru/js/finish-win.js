@@ -1,56 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
     const resultContainer = document.querySelector('.result-container');
 
-    // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★
-    // ★★★ この1行を追加してアニメーションを開始 ★★★
-    // ★★★★★★★★★★★★★★★★★★★★★★★★★★
     if (resultContainer) {
-        // 遅延させてアニメーションクラスを適用
         setTimeout(() => {
             resultContainer.classList.add('show');
         }, 100);
     }
     
-    // --- ここから下のコードは変更ありません ---
-
-    // ボタンや表示エリアの要素を取得
     const retryButton = document.getElementById('retry-button');
     const wordListButton = document.getElementById('word-list-button');
-    const wordListContainer = document.getElementById('word-list-container');
-    const wordListUl = document.getElementById('word-list');
     const notificationArea = document.getElementById('achievement-notification');
     const userId = localStorage.getItem('kijobatoUserId');
     
-    // ボタンの機能
     if (retryButton) {
         retryButton.addEventListener('click', () => {
             window.location.href = '/'; // トップページに戻る
         });
     }
 
-    if (wordListButton && wordListContainer && wordListUl) {
+    // ★★★ ここからが変更点 ★★★
+    if (wordListButton) {
         wordListButton.addEventListener('click', () => {
-            fetch('/api/word_history')
-                .then(response => response.json())
-                .then(history => {
-                    wordListUl.innerHTML = ''; 
-                    if (history.length > 0) {
-                        history.forEach(word => {
-                            const li = document.createElement('li');
-                            li.textContent = word;
-                            wordListUl.appendChild(li);
-                        });
-                    } else {
-                        const li = document.createElement('li');
-                        li.textContent = '単語の履歴がありません。';
-                        wordListUl.appendChild(li);
-                    }
-                    wordListContainer.style.display = 'block';
-                    wordListButton.style.display = 'none';
-                })
-                .catch(err => console.error('単語履歴の取得に失敗:', err));
+            // word-list.html にページを移動させる
+            window.location.href = 'word-list.html';
         });
     }
+    // ★★★ ここまでが変更点 ★★★
 
     // 実績解除の処理
     if (!userId || !notificationArea) {
