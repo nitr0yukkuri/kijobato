@@ -27,7 +27,7 @@
     ```sh
     node api/server.js
     ```
-4.  サーバーが `http://localhost:3000` （または `server.js` で指定されたポート）で起動します。
+4.  サーバーが `http://localhost:3001` （または `server.js` で指定されたポート）で起動します。
 5.  フロントエンドの `front/taitoru/index.html` などをブラウザで開いてゲームを開始します。
 
 ## APIエンドポイント
