@@ -1,11 +1,32 @@
 {
   "version": 2,
   "builds": [
-    { "src": "api/server.js", "use": "@vercel/node" },
-    { "src": "front/taitoru/**", "use": "@vercel/static" }
+    {
+      "src": "api/server.js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": [
+          "api/database.json",
+          "api/kisorironn.json",
+          "api/network.json",
+          "api/achievements.json",
+          "api/user_achievements.json"
+        ]
+      }
+    },
+    {
+      "src": "front/taitoru/**",
+      "use": "@vercel/static"
+    }
   ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "api/server.js" },
-    { "src": "/(.*)", "dest": "/front/taitoru/$1" }
+    {
+      "src": "/api/(.*)",
+      "dest": "api/server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/front/taitoru/$1"
+    }
   ]
 }
