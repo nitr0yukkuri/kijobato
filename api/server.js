@@ -30,6 +30,7 @@ const dbPaths = {
     wordsEasy: resolvePath('kisorironn.json'),
     wordsMedium: resolvePath('database.json'),
     wordsHard: resolvePath('network.json'),
+     wordsAlgorithm: resolvePath('algorithm.json'),
 };
 
 let allWords = [];
@@ -38,7 +39,7 @@ let wordHistory = [];
 function loadAllWords() {
     logInfo("すべての単語リストの読み込みと結合を開始します...");
     const tempWords = [];
-    const wordFiles = [dbPaths.wordsEasy, dbPaths.wordsMedium, dbPaths.wordsHard];
+    const wordFiles = [dbPaths.wordsEasy, dbPaths.wordsMedium, dbPaths.wordsHard,dbPaths.wordsAlgorithm];
 
     for (const filePath of wordFiles) {
         logInfo(`- ファイルを読み込みます: ${filePath}`);

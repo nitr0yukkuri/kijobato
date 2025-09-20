@@ -238,4 +238,53 @@
 
 #achievements-btn:hover {
     opacity: 0.9;
+    
+}
+/* ================================================= */
+/* ====== 画面四隅のボタン関連スタイル (共通) ====== */
+/* ================================================= */
+
+/* 右上のボタンをまとめるエリア */
+.top-right-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    display: flex;
+    gap: 15px; /* ボタン同士の間隔 */
+}
+
+/* 右下のボタンをまとめるエリア */
+.bottom-right-container {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 100;
+    display: flex;
+    gap: 15px; /* ボタン同士の間隔 */
+}
+
+/* 丸いアイコンボタンの共通デザイン */
+.icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.3); /* 少し透明な白 */
+    color: white;
+    border: 2px solid white;
+    border-radius: 50%; /* 正円にする */
+    text-decoration: none; /* リンクの下線を消す */
+    font-size: 24px; /* アイコンのサイズ */
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out; /* アニメーション */
+}
+
+/* マウスを乗せたときの共通デザイン */
+.icon-btn:hover {
+    background-color: white;
+    color: black;
+    transform: scale(1.1); /* 少し大きくする */
 }

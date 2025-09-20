@@ -10,7 +10,8 @@
           "api/kisorironn.json",
           "api/network.json",
           "api/achievements.json",
-          "api/user_achievements.json"
+          "api/user_achievements.json",
+          "api/algorithm.json"
         ]
       }
     },
