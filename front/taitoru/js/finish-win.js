@@ -48,10 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data.achievement) {
                 const achievementElement = document.createElement('div');
                 achievementElement.className = 'achievement-unlocked';
-                achievementElement.innerHTML = `
-                    <h3>✨ 実績解除！ ✨</h3>
-                    <p><strong>${data.achievement.name}</strong>: ${data.achievement.description}</p>
-                `;
+           
                 notificationArea.appendChild(achievementElement);
             }
         })
