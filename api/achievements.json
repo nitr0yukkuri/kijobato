@@ -4,7 +4,7 @@
       "id": 1,
       "name": "はじめの一歩",
       "description": "初めてゲームをプレイした",
-      "image": "./yakyu.png/"
+      "image": "/png/yakyu.png"
     },
     {
       "id": 2,

@@ -1,3 +1,15 @@
+// ★ 1. Vercel KVライブラリをインポート
+require('dotenv').config({ path: './.env.local' });
+
+// ↓↓↓ 正しい場所はここです ↓↓↓
+console.log("【確認用】読み込まれたURL:", process.env.KV_REST_API_URL);
+console.log("【確認用】読み込まれたトークン:", process.env.KV_REST_API_TOKEN);
+
+
+
+
+// ...以降は変更なし
+const { kv } = require('@vercel/kv');
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
@@ -7,7 +19,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Vercel環境とローカル環境でファイルのパスを正しく解決するための関数
+// (この下の部分は変更ありません)
 const resolvePath = (file) => {
     if (process.env.VERCEL) {
         return path.resolve(process.cwd(), 'api', file);
@@ -15,7 +27,6 @@ const resolvePath = (file) => {
     return path.join(__dirname, file);
 };
 
-// --- ログ出力用の関数 ---
 function logInfo(message) {
     console.log(`[INFO] ${new Date().toISOString()}: ${message}`);
 }
@@ -23,7 +34,6 @@ function logError(message, error) {
     console.error(`[ERROR] ${new Date().toISOString()}: ${message}`, error || '');
 }
 
-// dbPathsの定義を新しいパス解決関数を使うように変更
 const dbPaths = {
     achievements: resolvePath('achievements.json'),
     userAchievements: resolvePath('user_achievements.json'),
@@ -40,7 +50,6 @@ function loadAllWords() {
     logInfo("すべての単語リストの読み込みと結合を開始します...");
     const tempWords = [];
     const wordFiles = [dbPaths.wordsEasy, dbPaths.wordsMedium, dbPaths.wordsHard,dbPaths.wordsAlgorithm];
-
     for (const filePath of wordFiles) {
         logInfo(`- ファイルを読み込みます: ${filePath}`);
         if (fs.existsSync(filePath)) {
@@ -59,7 +68,6 @@ function loadAllWords() {
             logError(`  エラー: ファイルが見つかりません: ${filePath}`);
         }
     }
-    
     const uniqueWords = new Map();
     tempWords.forEach(item => {
         const normalized = normalizeWord(item.word);
@@ -76,7 +84,6 @@ function normalizeWord(str) {
     return str.trim().replace(/[\u3041-\u3096]/g, match => String.fromCharCode(match.charCodeAt(0) + 0x60)).toUpperCase();
 }
 
-// --- APIエンドポイント ---
 app.get('/api/words', (req, res) => {
     wordHistory = [];
     if (allWords.length > 0) {
@@ -91,81 +98,48 @@ app.get('/api/word_history', (req, res) => {
         const foundWord = allWords.find(w => normalizeWord(w.word) === historyWord);
         return foundWord ? { word: foundWord.word, description: foundWord.description } : null;
     }).filter(item => item !== null);
-
     res.json(detailedHistory);
 });
 
 app.post('/api/turn', (req, res) => {
     const { word, difficulty } = req.body;
     const playerWord = normalizeWord(word);
-    
     const wordList = allWords; 
-
-    // ★★★ 変更箇所 1: `word` と `aliases` の両方を検索するように修正 ★★★
     const foundWord = wordList.find(w => 
         normalizeWord(w.word) === playerWord || 
         (w.aliases && Array.isArray(w.aliases) && w.aliases.some(alias => normalizeWord(alias) === playerWord))
     );
-    
     if (!foundWord) return res.json({ isValid: false, message: 'その単語は存在しません！' });
-
-    // ★★★ 変更箇所 2: 履歴のチェックと追加は、見つかった単語の正規名(`foundWord.word`)で行う ★★★
     const normalizedFoundWord = normalizeWord(foundWord.word);
     if (wordHistory.includes(normalizedFoundWord)) return res.json({ isValid: false, message: 'その単語は既に使用されています！' });
-
     wordHistory.push(normalizedFoundWord);
-    
     const playerTurnCount = Math.ceil(wordHistory.length / 2);
     let cpuShouldReply = false;
-
     logInfo(`Player turn: ${playerTurnCount}, Difficulty: ${difficulty}`);
-
     switch (difficulty) {
         case 'easy':
-            if (playerTurnCount <= 3) {
-                cpuShouldReply = true;
-            } else {
-                cpuShouldReply = Math.random() < 0.7;
-            }
+            if (playerTurnCount <= 3) { cpuShouldReply = true; } else { cpuShouldReply = Math.random() < 0.7; }
             break;
         case 'medium':
-            if (playerTurnCount <= 10) {
-                cpuShouldReply = true;
-            } else {
-                cpuShouldReply = Math.random() < 0.9;
-            }
+            if (playerTurnCount <= 10) { cpuShouldReply = true; } else { cpuShouldReply = Math.random() < 0.9; }
             break;
         case 'hard':
         default:
             cpuShouldReply = true;
             break;
     }
-
     if (!cpuShouldReply) {
         logInfo(`CPUが難易度ルールに基づき返信しませんでした。プレイヤーの勝利です。`);
-        return res.json({ 
-            isValid: true, 
-            playerWordDescription: foundWord.description, 
-            cpuTimedOut: true 
-        });
+        return res.json({ isValid: true, playerWordDescription: foundWord.description, cpuTimedOut: true });
     }
-    
     const possibleCpuWords = allWords.filter(w => !wordHistory.includes(normalizeWord(w.word)));
-
     if (possibleCpuWords.length === 0) {
         logInfo(`CPUが返せる単語がありません。プレイヤーの勝利です。`);
-        return res.json({ 
-            isValid: true, 
-            playerWordDescription: foundWord.description, 
-            cpuTimedOut: true 
-        });
+        return res.json({ isValid: true, playerWordDescription: foundWord.description, cpuTimedOut: true });
     }
-    
     const cpuChoice = possibleCpuWords[Math.floor(Math.random() * possibleCpuWords.length)];
     wordHistory.push(normalizeWord(cpuChoice.word));
-    
     const randomDelay = Math.floor(Math.random() * 4001) + 1000;
-
     res.json({
         isValid: true,
         playerWordDescription: foundWord.description,
@@ -175,22 +149,62 @@ app.post('/api/turn', (req, res) => {
     });
 });
 
-// --- 実績機能 ---
-const achievementsData = fs.existsSync(dbPaths.achievements) ? JSON.parse(fs.readFileSync(dbPaths.achievements, 'utf8')).achievements : [];
-function getUserAchievements() { try { return fs.existsSync(dbPaths.userAchievements) ? JSON.parse(fs.readFileSync(dbPaths.userAchievements, 'utf8')) : {}; } catch (err) { return {}; } }
+// --- ★ 2. ここから実績機能をKV用に書き換える ---
 
-function saveUserAchievements(data) {
-    if (!process.env.VERCEL) {
-        fs.writeFileSync(dbPaths.userAchievements, JSON.stringify(data, null, 2));
-    } else {
-        console.log("Vercel環境のため、実績ファイルの書き込みをスキップしました。");
+// 全ての実績リストはこれまで通りファイルから読み込む
+const achievementsData = fs.existsSync(dbPaths.achievements) ? JSON.parse(fs.readFileSync(dbPaths.achievements, 'utf8')).achievements : [];
+
+// 【変更】KVから特定のユーザーの実績データを取得する関数
+async function getUserUnlockedAchievements(userId) {
+    try {
+        // 'achievements:ユーザーID' というキーでデータを取得
+        const unlockedIds = await kv.get(`achievements:${userId}`);
+        return unlockedIds || []; // データがなければ空の配列を返す
+    } catch (error) {
+        logError('Failed to get achievements from KV', error);
+        return [];
     }
 }
 
-app.post('/api/unlock_achievement', (req, res) => { const { userId, achievementId } = req.body; if (!userId || !achievementId) { return res.status(400).json({ error: 'userId and achievementId are required' }); } const userAchievements = getUserAchievements(); if (!userAchievements[userId]) { userAchievements[userId] = []; } if (!userAchievements[userId].includes(achievementId)) { userAchievements[userId].push(achievementId); saveUserAchievements(userAchievements); const unlockedAchievement = achievementsData.find(a => a.id === achievementId); res.status(200).json({ message: 'Achievement unlocked!', achievement: unlockedAchievement }); } else { res.status(200).json({ message: 'Achievement already unlocked' }); } });
-app.get('/api/achievements/:userId', (req, res) => { const userId = req.params.userId; const userAchievements = getUserAchievements(); const unlockedIds = userAchievements[userId] || []; const unlockedAchievements = achievementsData.filter(a => unlockedIds.includes(a.id)); res.json(unlockedAchievements); });
+// 【変更】KVに特定のユーザーの実績データを保存する関数
+async function saveUserUnlockedAchievements(userId, unlockedIds) {
+    try {
+        await kv.set(`achievements:${userId}`, unlockedIds);
+    } catch (error) {
+        logError('Failed to save achievements to KV', error);
+    }
+}
 
-// --- サーバー起動 ---
+// 【変更】実績解除APIを非同期(async)にし、KVの関数を使うように修正
+app.post('/api/unlock_achievement', async (req, res) => {
+    const { userId, achievementId } = req.body;
+    if (!userId || !achievementId) {
+        return res.status(400).json({ error: 'userId and achievementId are required' });
+    }
+
+    const unlockedIds = await getUserUnlockedAchievements(userId);
+
+    if (!unlockedIds.includes(achievementId)) {
+        unlockedIds.push(achievementId);
+        await saveUserUnlockedAchievements(userId, unlockedIds);
+        
+        const unlockedAchievement = achievementsData.find(a => a.id === achievementId);
+        res.status(200).json({ message: 'Achievement unlocked!', achievement: unlockedAchievement });
+    } else {
+        res.status(200).json({ message: 'Achievement already unlocked' });
+    }
+});
+
+// 【変更】実績一覧取得APIも非同期(async)にし、KVの関数を使うように修正
+app.get('/api/achievements/:userId', async (req, res) => {
+    const userId = req.params.userId;
+    const unlockedIds = await getUserUnlockedAchievements(userId);
+    const unlockedAchievements = achievementsData.filter(a => unlockedIds.includes(a.id));
+    res.json(unlockedAchievements);
+});
+
+
+// --- サーバー起動 (この部分は変更ありません) ---
 if (!process.env.VERCEL) {
     app.use(express.static(path.join(__dirname, '../front/taitoru')));
     app.get('/', (req, res) => { res.sendFile(path.join(__dirname, '../front/taitoru/index.html')); });

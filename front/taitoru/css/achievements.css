@@ -39,7 +39,7 @@ h1 {
     align-items: center;
     width: 350px;
     padding: 10px;
-   background: linear-gradient(45deg, #8C5422 0%, #B87333 25%, #D9B99B 50%, #B87333 75%, #8C5422 100%);
+   background: linear-gradient(45deg, #8C5422 0%, #B87333 25%, #d3a57a 50%, #B87333 75%, #8C5422 100%);
     border: 1px solid #ddd;
     border-radius: 8px;
 }
