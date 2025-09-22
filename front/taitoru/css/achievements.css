@@ -1,21 +1,29 @@
 body {
-    background-color: #f0f8ff;
-    color: #333;
+    /* 変更前: background-color: #f0f8ff; */
+    background-image: url('../png/treetree.jpg'); /* 例: url('../images/bg.jpg') */
+    background-size: cover; /* 画面全体を覆うように画像を調整 */
+    background-position: center; /* 画像を中央に配置 */
+    background-attachment: fixed; /* スクロールしても背景を固定 */
+    background-repeat: no-repeat; /* 画像を繰り返さない */
+    
+    color: white; /* ★変更: 文字色を白に */
     font-family: sans-serif;
+    margin: 0; /* ブラウザ標準の余白をリセット */
 }
 
 .container {
     max-width: 800px;
     margin: 20px auto;
     padding: 20px;
-    background-color: #fff;
+    /* 変更前: background-color: #fff; */
+    background-color: rgba(0, 0, 0, 0.8); /* ★変更: 少し透ける黒に */
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 h1 {
     text-align: center;
-    color: #4682b4;
+    color: white; /* ★変更: 文字色を白に */
 }
 
 .achievement-container {
@@ -31,7 +39,7 @@ h1 {
     align-items: center;
     width: 350px;
     padding: 10px;
-    background-color: #f9f9f9;
+   background: linear-gradient(45deg, #8C5422 0%, #B87333 25%, #D9B99B 50%, #B87333 75%, #8C5422 100%);
     border: 1px solid #ddd;
     border-radius: 8px;
 }
@@ -44,13 +52,13 @@ h1 {
 
 .achievement-details h3 {
     margin: 0 0 5px 0;
-    color: #333;
+    color: #fafafa; /* ★変更: 文字色を白に */
 }
 
 .achievement-details p {
     margin: 0;
     font-size: 0.9em;
-    color: #666;
+    color: white; /* ★変更: 文字色を白に */
 }
 
 .back-button {
@@ -59,8 +67,9 @@ h1 {
     margin: 30px auto 0;
     text-align: center;
     padding: 10px;
-    background-color: #4682b4;
-    color: white;
+    background-color: rgba(255, 255, 245, 0.8); /* ★変更: 少し透ける黒に */
+    border: #fff solid 2px;
+    color: black;
     text-decoration: none;
     border-radius: 5px;
 }
