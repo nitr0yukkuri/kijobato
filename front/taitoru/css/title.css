@@ -389,3 +389,16 @@
     background-color: rgba(255, 255, 255, 0.2);
     transform: scale(1.02); /* 少しだけ拡大 */
 }
+/* クリック後（フォーカス時）にボタンの色が元に戻るようにする修正 */
+/* クリック後（フォーカス時）に元のスタイルに戻す */
+.icon-btn:focus {
+    background-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    transform: scale(1.0); /* ★ 大きさを元に戻す指定を追加 */
+}
+/* フォーカスが当たっている状態でも、ホバーが効くようにする修正 */
+.icon-btn:focus:hover {
+    background-color: white;
+    color: black;
+    transform: scale(1.1);
+}

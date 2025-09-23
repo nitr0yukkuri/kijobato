@@ -195,11 +195,7 @@
     "word": "MIME",
     "description": "Multipurpose Internet Mail Extensions。メールで文字以外のデータ（画像や音声など）を送れるようにする仕組み。"
   },
-  {
-    "id": 40,
-    "word": "SMTP",
-    "description": "Simple Mail Transfer Protocol。メールを送信するための通信規格。"
-  },
+ 
   {
     "id": 41,
     "word": "NNTP",
@@ -394,5 +390,65 @@
     "id": 79,
     "word": "CGI",
     "description": "Common Gateway Interface。Webサーバーが外部プログラムを実行して、動的なWebページを作る仕組み。"
+  },  {
+    "id": "a",
+    "word": "VPN",
+    "description": "Virtual Private Network。インターネット上に仮想的な専用線を設けて、安全な通信を確保する技術。"
+  },
+  {
+    "id": "b",
+    "word": "SSL/TLS",
+    "description": "Secure Sockets Layer / Transport Layer Security。インターネット上のデータを暗号化して、通信の盗聴や改ざんを防ぐ仕組み。"
+  },
+  {
+    "id": "c",
+    "word": "HTTPS",
+    "description": "HTTP Secure。SSL/TLSを使って暗号化された、安全なHTTP通信。"
+  },
+  {
+    "id": "d",
+    "word": "IDS/IPS",
+    "description": "Intrusion Detection/Prevention System。ネットワークへの不正な侵入を検知（IDS）または防御（IPS）するシステム。"
+  },
+  {
+    "id": "e",
+    "word": "DoS/DDoS攻撃",
+    "description": "Denial of Service attack。大量のデータを送りつけてサーバーをダウンさせ、サービスを妨害する攻撃。"
+  },
+  {
+    "id": "f",
+    "word": "VLAN",
+    "description": "Virtual LAN。物理的な接続に関係なく、スイッチの設定によって仮想的なLANグループを作る技術。"
+  },
+  {
+    "id": "g",
+    "word": "CDN",
+    "description": "Content Delivery Network。世界中に配置したサーバーにコンテンツのコピーを置き、利用者から一番近い場所から高速に配信する仕組み。"
+  },
+  {
+    "id": "h",
+    "word": "API",
+    "description": "Application Programming Interface。ソフトウェアやプログラム同士が、互いの機能や情報をやり取りするための約束事。"
+  },
+  {
+    "id": "i",
+    "word": "VoIP",
+    "description": "Voice over IP。インターネット回線を使って音声通話を実現する技術。IP電話などがこれにあたる。"
+  },
+  {
+    "id": "l",
+    "word": "IPv6",
+    "description": "Internet Protocol version 6。現在主流のIPv4に代わる、次世代のIPアドレス規格。事実上、無限に近いアドレス数を持つ。"
+  },
+  {
+    "id": "m",
+    "word": "Wi-Fi",
+    "description": "無線でLANに接続する通信技術の規格。多くの機器で標準的に利用される。"
+  },
+  {
+    "id": "n",
+    "word": "帯域幅",
+    "aliases": ["Bandwidth"],
+    "description": "ネットワーク回線が、一定時間内にどれだけのデータを転送できるかを示す最大量。通信速度の指標。"
   }
 ]
