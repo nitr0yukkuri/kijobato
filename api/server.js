@@ -1,9 +1,6 @@
 // ★ 1. Vercel KVライブラリをインポート
 require('dotenv').config({ path: './.env.local' });
 
-// ↓↓↓ 正しい場所はここです ↓↓↓
-console.log("【確認用】読み込まれたURL:", process.env.KV_REST_API_URL);
-console.log("【確認用】読み込まれたトークン:", process.env.KV_REST_API_TOKEN);
 
 
 
