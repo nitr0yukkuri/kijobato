@@ -288,3 +288,104 @@
     color: black;
     transform: scale(1.1); /* 少し大きくする */
 }
+/* --- 設定メニュー関連のスタイル（新しいデザイン） --- */
+
+/* メニューの見た目 */
+#settings-menu {
+    position: absolute;
+    top: 60px; /* ボタンの少し下に表示 */
+    right: 0;
+    z-index: 110;
+    
+    /* 背景を半透明の白に変更 */
+    background-color: rgba(255, 255, 255, 0.85); 
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+
+    /* ★ボタンを横に並べるように変更 */
+    display: flex;
+    gap: 8px; 
+}
+
+/* このクラスが付いているときにメニューを非表示にする（変更なし） */
+#settings-menu.hidden {
+    display: none;
+}
+
+/* メニュー内のボタンのスタイル */
+#settings-menu button {
+    /* ボタンの見た目を画像に合わせる */
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #999;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    white-space: nowrap; /* ボタンのテキストが改行しないように */
+    transition: background-color 0.2s;
+}
+
+#settings-menu button:hover {
+    background-color: #dcdcdc;
+}
+
+/* --- 設定メニュー関連のスタイル（新しいデザイン） --- */
+
+/* 設定ボタン自体の位置を決めるコンテナ */
+.settings-container {
+    position: relative; 
+}
+
+/* メニューの見た目 */
+#settings-menu {
+    /* ▼ 画面の真ん中に表示する設定 ▼ */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000; /* 全ての要素の最前面に表示 */
+    /* ▲ ここまで ▲ */
+
+    width: 300px; /* メニューの横幅 */
+    background-color: rgba(0, 0, 0, 0.85); /* 半透明の黒 */
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+
+    /* ▼ ボタンを縦に並べる設定 ▼ */
+    display: flex;
+    flex-direction: column;
+    gap: 15px; 
+    /* ▲ ここまで ▲ */
+}
+
+/* メニューが表示されるときの隠す/表示する設定 */
+#settings-menu.hidden {
+    display: none;
+}
+
+/* メニュー内のボタンのスタイル */
+#settings-menu button {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    width: 100%;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+/* マウスを乗せたときのスタイル */
+#settings-menu button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.02); /* 少しだけ拡大 */
+}
