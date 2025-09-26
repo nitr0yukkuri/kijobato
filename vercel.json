@@ -11,7 +11,8 @@
           "api/network.json",
           "api/achievements.json",
           "api/user_achievements.json",
-          "api/algorithm.json"
+          "api/algorithm.json",
+          "api/computer-component.json"
         ]
       }
     },
