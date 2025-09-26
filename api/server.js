@@ -136,7 +136,7 @@ app.post('/api/turn', (req, res) => {
     }
     const cpuChoice = possibleCpuWords[Math.floor(Math.random() * possibleCpuWords.length)];
     wordHistory.push(normalizeWord(cpuChoice.word));
-    const randomDelay = Math.floor(Math.random() * 4001) + 1000;
+    const randomDelay = Math.floor(Math.random() * 2001) + 3000;
     res.json({
         isValid: true,
         playerWordDescription: foundWord.description,

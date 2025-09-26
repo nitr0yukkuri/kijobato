@@ -101,6 +101,19 @@ h1 {
 
         max-width: 90%; /* タイトルロゴがはみ出ないように */
     }
+    #back-to-title-buttonn {
+        position: fixed; /* 画面全体を基準に位置を固定 */
+        top: 100px !important; /* 画面の上から100pxの位置 */
+        right: 20px; /* 画面の右から20pxの位置 */
+
+    }
+ 
+    .timer {
+        top: 370px;
+        bottom: 45px;
+        font-size: 1.8rem;
+    }
        
     
 }
+
