@@ -12,8 +12,9 @@
           "api/achievements.json",
           "api/user_achievements.json",
           "api/algorithm.json",
-          "api/computer-component.json"
-          "api/System-components.json"
+          "api/computer-component.json",
+          "api/System-components.json",
+          "api/operation-system.json"
         ]
       }
     },

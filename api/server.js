@@ -40,6 +40,7 @@ const dbPaths = {
     wordsAlgorithm: resolvePath('algorithm.json'),
     wordsComputerComponent: resolvePath('computer-component.json'),
     wordsSystemComponent: resolvePath('System-components.json'),
+    wordsOperationSystem: resolvePath('operation-system.json')
 };
 
 let allWords = [];
@@ -48,7 +49,7 @@ let wordHistory = [];
 function loadAllWords() {
     logInfo("すべての単語リストの読み込みと結合を開始します...");
     const tempWords = [];
-    const wordFiles = [dbPaths.wordsEasy, dbPaths.wordsMedium, dbPaths.wordsHard,dbPaths.wordsAlgorithm, dbPaths.wordsComputerComponent , dbPaths.wordsSystemComponent];
+    const wordFiles = [dbPaths.wordsEasy, dbPaths.wordsMedium, dbPaths.wordsHard,dbPaths.wordsAlgorithm, dbPaths.wordsComputerComponent , dbPaths.wordsSystemComponent, dbPaths.wordsOperationSystem];
     for (const filePath of wordFiles) {
         logInfo(`- ファイルを読み込みます: ${filePath}`);
         if (fs.existsSync(filePath)) {
