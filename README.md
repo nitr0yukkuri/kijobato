@@ -7,18 +7,12 @@
 本プロジェクトは、敵(CPU)（ゲームフロントエンド）を通じて、楽しみながらITの基礎知識を習得することを  
 目的としています。データはVercelへのデプロイを前提としたNode.js (Express) サーバーによって提供されます。
 
-## 技術スタック
-
-* **バックエンド:** Node.js, Express
-* **フロントエンド:** HTML, CSS, JavaScript (Vanilla JS)
-* **データ形式:** JSON
-* **デプロイ環境:** Vercel (vercel.jsonに基づく)
-
+#
 ## 実行方法
 
 1.  リポジトリをクローンします。
     ```sh
-    git clone [リポジトリURL]
+    git clone [https://github.com/nitr0yukkuri/kijobato.git](https://github.com/nitr0yukkuri/kijobato.git)
     cd kijobato
     ```
 2.  必要な依存関係をインストールします。
@@ -39,3 +33,7 @@
 * `/api/database`: データベース関連の用語リストを取得します。
 * `/api/kisorironn`: 基礎理論関連の用語リストを取得します。
 * `/api/network`: ネットワーク関連の用語リストを取得します。
+* `/api/algorithm`: アルゴリズム関連の用語リストを取得します。
+* `/api/computer-component`: コンピュータコンポーネント関連の用語リストを取得します。
+* `/api/operation-system`: オペレーティングシステム関連の用語リストを取得します。
+* `/api/system-components`: システムコンポーネント関連の用語リストを取得します。
