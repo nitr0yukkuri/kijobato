@@ -12,7 +12,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// (この下の部分は変更ありません)
+// (この下の部分は変更あaaaりません)
 const resolvePath = (file) => {
     if (process.env.VERCEL) {
         return path.resolve(process.cwd(), 'api', file);
