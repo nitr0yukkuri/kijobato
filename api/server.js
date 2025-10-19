@@ -114,7 +114,7 @@ app.post('/api/turn', (req, res) => {
     logInfo(`Player turn: ${playerTurnCount}, Difficulty: ${difficulty}`);
     switch (difficulty) {
         case 'easy':
-            if (playerTurnCount <= 3) { cpuShouldReply = true; } else { cpuShouldReply = Math.random() < 0.7; }
+            if (playerTurnCount <= 3) { cpuShouldReply = true; } else { cpuShouldReply = Math.random() < 0.01; }
             break;
         case 'medium':
             if (playerTurnCount <= 10) { cpuShouldReply = true; } else { cpuShouldReply = Math.random() < 0.9; }
