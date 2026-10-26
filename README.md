@@ -14,7 +14,7 @@
 
 1.  リポジトリをクローンします。
     ```sh
-    git clone [https://github.com/nitr0yukkuri/kijobato.git](https://github.com/nitr0yukkuri/kijobato.git)
+    git clone https://github.com/nitr0yukkuri/kijobato.git
     cd kijobato
     ```
 2.  必要な依存関係をインストールします。
