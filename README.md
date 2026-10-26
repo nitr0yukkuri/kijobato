@@ -1,4 +1,6 @@
 # きじょバト
+
+[日本語](README.md) | [English](README.en.md)
 基本情報に関する単語を入力し敵(CPU)とお互い思いつくまで単語を入力する  
 ゲームです
 
@@ -12,7 +14,7 @@
 
 1.  リポジトリをクローンします。
     ```sh
-    git clone [https://github.com/nitr0yukkuri/kijobato.git](https://github.com/nitr0yukkuri/kijobato.git)
+    git clone https://github.com/nitr0yukkuri/kijobato.git
     cd kijobato
     ```
 2.  必要な依存関係をインストールします。
