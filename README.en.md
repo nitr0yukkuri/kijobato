@@ -12,7 +12,7 @@ This project aims to help players learn basic IT knowledge while having fun, thr
 
 1. Clone the repository.
    ```sh
-   git clone [https://github.com/nitr0yukkuri/kijobato.git](https://github.com/nitr0yukkuri/kijobato.git)
+   git clone https://github.com/nitr0yukkuri/kijobato.git
    cd kijobato
    ```
 2. Install dependencies.
